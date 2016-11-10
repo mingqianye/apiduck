@@ -63,6 +63,7 @@ lein cljsbuild once min
 ## Run in Production
 
 ```
+docker-compose build
 docker-compose up
 ```
 

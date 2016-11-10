@@ -1,8 +1,19 @@
 (ns apiduck.db)
 
+(def default-template
+  {
+  "title" "Product"
+  "description" "A product from Acme's catalog"
+  "type" "object"
+  "properties" {
+      "id"    { "description" "The identifier for a product" :type "integer" }
+      "name"  { "description" "Name of the product" :type "string" }
+      "price" { "type" "number" }
+  }
+  })
+
 (def default-db
   {
     :name "re-frame"
-    :kk {:a {:a 0, :b 1, :c 2, :d 3, :e 4}, :b {:a 0, :b 1, :c 2, :d 3, :e 4}, :c {:a 0, :b 1, :c 2, :d 3, :e 4}, :d {:a 0, :b 1, :c 2, :d 3, :e 4}, :e {:a 0, :b 1, :c 2, :d 3, :e 4}}
-   
+    :default-template default-template
   })
