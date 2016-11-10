@@ -1,7 +1,7 @@
 (ns apiduck.views
     (:require [re-frame.core :as re-frame]
               [re-com.core :as re-com]
-              [apiduck.row-button :as row-button]))
+              [apiduck.duck-table :as duck-table]))
 
 (defn title []
   (let [name (re-frame/subscribe [:name])]
@@ -22,4 +22,12 @@
   (fn []
     [re-com/v-box
      :height "100%"
-     :children [[title] [row-button/panel] [db-printout]]]))
+     :children [
+                [re-com/box :child [title]] 
+                [re-com/h-box  :children [
+                                          [re-com/gap :size "15px"]
+                                          [re-com/box :child "My Left Pane"]
+                                          [re-com/gap :size "15px"]
+                                          [re-com/box :child [duck-table/panel]]
+                                         ]]
+                [re-com/box :child [db-printout]]]]))
