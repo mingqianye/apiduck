@@ -1,6 +1,7 @@
 (ns apiduck.views
     (:require [re-frame.core :as re-frame]
-              [re-com.core :as re-com]))
+              [re-com.core :as re-com]
+              [apiduck.row-button :as row-button]))
 
 (defn title []
   (let [name (re-frame/subscribe [:name])]
@@ -21,4 +22,4 @@
   (fn []
     [re-com/v-box
      :height "100%"
-     :children [[title] [db-printout]]]))
+     :children [[title] [row-button/panel] [db-printout]]]))
