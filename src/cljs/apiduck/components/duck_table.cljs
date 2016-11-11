@@ -1,13 +1,22 @@
 (ns apiduck.duck-table
-  (:require [reagent.core                  :as    reagent]
-            [apiduck.duck-row              :refer [data-row]]))
+  (:require [re-frame.core    :as re-frame]
+            [reagent.core     :as    reagent]
+            [apiduck.duck-row :refer [data-row]]))
+
+(defn myrows 
+  [template]
+   (for [[k v] (template "properties")] 
+     {:id k 
+      :sort k
+      :variable k 
+      :description (v "description") 
+      :type (v "type")}))
 
 (defn enumerate
   "(for [[item first? last?] (enumerate coll)] ...)  "
   [coll]
   (let [c (dec (count coll))
-        f (fn [index item] [item (= 0 index) (= c index)])
-        ]
+        f (fn [index item] [item (= 0 index) (= c index)])]
     (->> coll
          (sort-by :sort)
          (map-indexed f))))
@@ -24,7 +33,6 @@
           [:tr [:th "Sort"] [:th "Name"] [:th "From"] [:th "To"] [:th "Actions"]]
         ]
         [:tbody
-          
           (for [[row first? last?] (enumerate rows)]
             ^{:key (:id row)} [data-row row first? last? mouse-over click-msg])
         ]
@@ -35,13 +43,11 @@
 
 (defn row-button-demo
   []
-  (let [rows       [{:id "1" :sort 0 :name "Time range 1" :from "18:00" :to "22:30"}
-                    {:id "2" :sort 1 :name "Time range 2" :from "18:00" :to "22:30"}
-                    {:id "3" :sort 2 :name "Time range 3" :from "06:00" :to "18:00"}]]
+  (let [template (re-frame/subscribe [:default-template])]
     (fn []
       [:div
-        [data-table rows]])))
-
+        [data-table (myrows @template)]
+      ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates
 (defn panel

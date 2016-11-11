@@ -22,9 +22,9 @@
                            :disabled?       (and last? mouse-over-row?)
                            :on-click        #(reset! click-msg (str "move row " (:id row) " down"))
           ]] 
-       [:td (:name row)] 
-       [:td (:from row)] 
-       [:td (:to row)] 
+       [:td (:variable row)] 
+       [:td (:description row)] 
+       [:td (:type row)] 
        [:td 
          [row-button
           :md-icon-name    "zmdi zmdi-copy"

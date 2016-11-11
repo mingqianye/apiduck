@@ -11,3 +11,8 @@
  :whole-db
  (fn [db]
    db))
+
+(re-frame/reg-sub
+ :default-template
+ (fn [db]
+   (:default-template db)))
