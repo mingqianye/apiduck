@@ -6,14 +6,14 @@
   "description" "A product from Acme's catalog"
   "type" "object"
   "properties" {
-      "id"    { "description" "The identifier for a product" "type" "integer" }
-      "name"  { "description" "Name of the product" "type" "string" }
-      "price" { "description" "The price" "type" "number" }
+      "id"    { "title" "Product id" "description" "The identifier for a product" "type" "integer" }
+      "name"  { "title" "Product name" "description" "Name of the product" "type" "string" }
+      "price" { "title" "Product price" "description" "The price" "type" "number" }
   }
   })
 
 (def default-db
   {
     :name "re-frame"
-    :default-template default-template
+    :current-schema default-template
   })

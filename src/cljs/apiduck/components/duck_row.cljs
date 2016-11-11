@@ -22,9 +22,6 @@
                            :disabled?       (and last? mouse-over-row?)
                            :on-click        #(reset! click-msg (str "move row " (:id row) " down"))
           ]] 
-       [:td (:variable row)] 
-       [:td (:description row)] 
-       [:td (:type row)] 
        [:td 
          [row-button
           :md-icon-name    "zmdi zmdi-copy"
@@ -42,4 +39,8 @@
           :tooltip         "Delete this line"
           :on-click        #(reset! click-msg (str "delete row " (:id row)))]
         ]
+       [:td (:variable row)] 
+       [:td (:title row)] 
+       [:td (:type row)] 
+       [:td (:description row)] 
        ]))

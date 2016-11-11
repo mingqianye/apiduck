@@ -13,6 +13,6 @@
    db))
 
 (re-frame/reg-sub
- :default-template
+ :current-schema
  (fn [db]
-   (:default-template db)))
+   (:current-schema db)))

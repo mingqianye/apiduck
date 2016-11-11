@@ -3,12 +3,13 @@
             [reagent.core     :as    reagent]
             [apiduck.duck-row :refer [data-row]]))
 
-(defn myrows 
+(defn transform
   [template]
    (for [[k v] (template "properties")] 
      {:id k 
       :sort k
       :variable k 
+      :title (v "title")
       :description (v "description") 
       :type (v "type")}))
 
@@ -30,7 +31,7 @@
     [:div
       [:table {:class "table table-hover"}
         [:thead          
-          [:tr [:th "Sort"] [:th "Name"] [:th "From"] [:th "To"] [:th "Actions"]]
+          [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
         ]
         [:tbody
           (for [[row first? last?] (enumerate rows)]
@@ -43,10 +44,10 @@
 
 (defn row-button-demo
   []
-  (let [template (re-frame/subscribe [:default-template])]
+  (let [template (re-frame/subscribe [:current-schema])]
     (fn []
       [:div
-        [data-table (myrows @template)]
+        [data-table (transform @template)]
       ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates
