@@ -2,22 +2,15 @@
   (:require [reagent.core                  :as    reagent]
             [apiduck.duck-row              :refer [data-row]]))
 
-(defn decorated-rows
-  [coll mouse-over click-msg]
-  (let [c (dec (count coll))]
-  (->> coll
-      (sort-by :sort)
-      (map-indexed (fn [index item] [item (= 0 index) (= c index) mouse-over click-msg]))
-      println
-  )))
-
 (defn enumerate
   "(for [[item first? last?] (enumerate coll)] ...)  "
   [coll]
   (let [c (dec (count coll))
         f (fn [index item] [item (= 0 index) (= c index)])
         ]
-    (map-indexed f (sort-by :sort coll))))
+    (->> coll
+         (sort-by :sort)
+         (map-indexed f))))
 
 
 (defn data-table
@@ -26,7 +19,7 @@
         click-msg  (reagent/atom "")]
   (fn []
     [:div
-      [:table {:class "table table-hover table-inverse"}
+      [:table {:class "table table-hover"}
         [:thead          
           [:tr [:th "Sort"] [:th "Name"] [:th "From"] [:th "To"] [:th "Actions"]]
         ]
