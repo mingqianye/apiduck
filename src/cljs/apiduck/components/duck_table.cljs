@@ -1,26 +1,50 @@
 (ns apiduck.duck-table
   (:require [re-frame.core    :as re-frame]
             [reagent.core     :as    reagent]
-            [apiduck.duck-row :refer [data-row]]))
+            [apiduck.duck-row :refer [data-row]]
+            [apiduck.colors   :refer [colors]]))
+
+(defn transform-shallow
+  [attr-name, attr-schema level]
+  (let [space "\u00A0\u00A0\u00A0"
+        indent (reduce str (repeat level space))
+        color  (get colors level)]
+    {:id          attr-name
+     :sort        attr-name
+     :variable    (str indent (name attr-name))
+     :title       (str (:title attr-schema) level)
+     :description (:description attr-schema)
+     :type        (:type attr-schema)
+     :level       level
+     :color       color
+     }))
+
+(defn transform-recursive
+  [attr-name attr-schema level]
+  (cons (transform-shallow attr-name attr-schema level)
+        (flatten (for [[k v] (:properties attr-schema)]
+                   (transform-recursive k v (inc level))))))
+  
 
 (defn transform
   [template]
-   (for [[k v] (template "properties")] 
+  (let [props (template :properties)
+        ]
+    
+   (for [[k v] props] 
      {:id k 
       :sort k
       :variable k 
-      :title (v "title")
-      :description (v "description") 
-      :type (v "type")}))
+      :title (v :title)
+      :description (v :description) 
+      :type (v :type)})))
 
 (defn enumerate
   "(for [[item first? last?] (enumerate coll)] ...)  "
   [coll]
   (let [c (dec (count coll))
         f (fn [index item] [item (= 0 index) (= c index)])]
-    (->> coll
-         (sort-by :sort)
-         (map-indexed f))))
+    (map-indexed f coll)))
 
 
 (defn data-table
@@ -44,10 +68,11 @@
 
 (defn row-button-demo
   []
-  (let [template (re-frame/subscribe [:current-schema])]
+  (let [template (re-frame/subscribe [:current-schema])
+        _ (println (transform-recursive :root @template 0))]
     (fn []
       [:div
-        [data-table (transform @template)]
+        [data-table (transform-recursive :root  @template 0)]
       ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates

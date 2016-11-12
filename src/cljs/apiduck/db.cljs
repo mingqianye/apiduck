@@ -29,6 +29,13 @@
                         "title" "Country name"
                         "description" "The name of address country"
                         "type" "string"
+                        "properties" {
+                          "code" {
+                                  "title" "SFDC code"
+                                  "description" "SFDC code of the country"
+                                  "type" "string"
+                                 }
+                          }
                                 }
                                }
                 }
@@ -39,5 +46,5 @@
 (def default-db
   {
     :name "re-frame"
-    :current-schema default-template
+    :current-schema (clojure.walk/keywordize-keys default-template)
   })

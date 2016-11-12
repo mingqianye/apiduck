@@ -4,8 +4,10 @@
 
 (defn data-row
   [row first? last? mouse-over click-msg]
-  (let [mouse-over-row? (identical? @mouse-over row)]
-  [:tr {:on-mouse-over (handler-fn (reset! mouse-over row))
+  (let [mouse-over-row? (identical? @mouse-over row)
+        color (:color row)]
+  [:tr {:style {:background-color color}
+        :on-mouse-over (handler-fn (reset! mouse-over row))
         :on-mouse-out  (handler-fn (reset! mouse-over nil))}
         [:td 
           [row-button
