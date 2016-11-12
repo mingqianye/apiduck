@@ -20,10 +20,12 @@
      }))
 
 (defn transform-recursive
-  [attr-name attr-schema level]
-  (cons (transform-shallow attr-name attr-schema level)
-        (flatten (for [[k v] (:properties attr-schema)]
-                   (transform-recursive k v (inc level))))))
+  ([attr-schema]
+   (transform-recursive :root attr-schema 0))
+  ([attr-name attr-schema level]
+   (let [cur      (transform-shallow attr-name attr-schema level)
+         children (for [[k v] (:properties attr-schema)] (transform-recursive k v (inc level)))]
+     (cons cur (flatten children)))))
   
 (defn enumerate
   "(for [[item first? last?] (enumerate coll)] ...)  "
@@ -57,7 +59,7 @@
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
       [:div
-        [data-table (transform-recursive :root  @template 0)]
+        [data-table (transform-recursive @template)]
       ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates
