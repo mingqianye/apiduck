@@ -25,20 +25,6 @@
         (flatten (for [[k v] (:properties attr-schema)]
                    (transform-recursive k v (inc level))))))
   
-
-(defn transform
-  [template]
-  (let [props (template :properties)
-        ]
-    
-   (for [[k v] props] 
-     {:id k 
-      :sort k
-      :variable k 
-      :title (v :title)
-      :description (v :description) 
-      :type (v :type)})))
-
 (defn enumerate
   "(for [[item first? last?] (enumerate coll)] ...)  "
   [coll]
@@ -68,8 +54,7 @@
 
 (defn row-button-demo
   []
-  (let [template (re-frame/subscribe [:current-schema])
-        _ (println (transform-recursive :root @template 0))]
+  (let [template (re-frame/subscribe [:current-schema])]
     (fn []
       [:div
         [data-table (transform-recursive :root  @template 0)]
