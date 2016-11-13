@@ -1,5 +1,5 @@
 (ns apiduck.db
-  (:require [apiduck.utils :refer [inject-block-id]]))
+  (:require [apiduck.utils :refer [inject-block-ids]]))
 
 (def default-template
   {
@@ -46,9 +46,9 @@
 
 (defn prepare-schema
   [raw-json]
-  (->> raw-json
+  (-> raw-json
       clojure.walk/keywordize-keys
-      inject-block-id))
+      inject-block-ids))
 
 (def default-db
   {
