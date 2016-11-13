@@ -5,5 +5,5 @@
   [input-map]
   (cond
     (not (map? input-map)) input-map
-    (contains? input-map :title) (into {:block-ids (str (random-uuid))} (for [[k v] input-map] {k (inject-block-ids v)}))
+    (contains? input-map :title) (into {:block-id (str (random-uuid))} (for [[k v] input-map] {k (inject-block-ids v)}))
     :else (into {} (for [[k v] input-map] {k (inject-block-ids v)}))))

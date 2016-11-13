@@ -6,8 +6,8 @@
 
 (defn transform-shallow
   [attr-name, attr-schema level]
-  (let [space "\u00A0\u00A0\u00A0"
-        indent (reduce str (repeat level space))
+  (let [gap "\u00A0\u00A0\u00A0"
+        indent (reduce str (repeat level gap))
         color  (get colors level)]
     {:id          attr-name
      :sort        attr-name
@@ -17,6 +17,7 @@
      :type        (:type attr-schema)
      :level       level
      :color       color
+     :block-id    (:block-id attr-schema)
      }))
 
 (defn transform-recursive
