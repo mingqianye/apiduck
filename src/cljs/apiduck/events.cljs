@@ -15,4 +15,5 @@
 (re-frame/reg-event-db
  :change-title
  (fn  [db [_ block-id new-title]]
-   (println (str block-id new-title))))
+   (println (str block-id new-title))
+   db))

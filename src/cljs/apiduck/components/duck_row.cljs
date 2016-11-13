@@ -43,7 +43,7 @@
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete" block-id)])]
         ]
-       [:td (:variable row)] 
+       [:td (str (:indent row) (:variable row))] 
        [:td [input-text
               :model (:title row)
               :on-change #(dispatch [:change-title block-id %])]] 
