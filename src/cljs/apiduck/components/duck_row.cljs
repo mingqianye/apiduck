@@ -1,5 +1,5 @@
 (ns apiduck.duck-row
-  (:require [re-com.core :refer [row-button checkbox]
+  (:require [re-com.core :refer [row-button checkbox input-text]
                          :refer-macros [handler-fn]]
             [re-frame.core :refer [dispatch]]))
 
@@ -44,7 +44,9 @@
           :on-click       #(dispatch [:change-click-msg (str "delete" block-id)])]
         ]
        [:td (:variable row)] 
-       [:td (:title row)] 
+       [:td [input-text
+              :model (:title row)
+              :on-change #(dispatch [:change-title block-id %])]] 
        [:td (:type row)] 
        [:td (:description row)] 
        ]))
