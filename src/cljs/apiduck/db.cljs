@@ -1,4 +1,5 @@
-(ns apiduck.db)
+(ns apiduck.db
+  (:require [apiduck.utils :refer [inject-block-id]]))
 
 (def default-template
   {
@@ -43,8 +44,14 @@
   }
   })
 
+(defn prepare-schema
+  [raw-json]
+  (->> raw-json
+      clojure.walk/keywordize-keys
+      inject-block-id))
+
 (def default-db
   {
     :name "re-frame"
-    :current-schema (clojure.walk/keywordize-keys default-template)
+    :current-schema (prepare-schema default-template)
   })
