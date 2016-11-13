@@ -38,21 +38,18 @@
 
 (defn data-table
   [rows]
-  (let [mouse-over (reagent/atom nil)
-        click-msg  (reagent/atom "")]
+  (let [mouse-over (reagent/atom nil)]
   (fn []
-    [:div
       [:table {:class "table table-hover"}
         [:thead          
           [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
         ]
         [:tbody
           (for [[row first? last?] (enumerate rows)]
-            ^{:key (:id row)} [data-row row first? last? mouse-over click-msg])
+            ^{:key (:id row)} [data-row row first? last? mouse-over])
         ]
       ]
-      [:div (str "clicked: " @click-msg)]
-    ])))
+    )))
 
 
 (defn row-button-demo
