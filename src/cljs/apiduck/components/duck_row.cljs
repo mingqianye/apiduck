@@ -41,12 +41,12 @@
           :md-icon-name    "zmdi zmdi-delete"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete this line"
-          :on-click       #(dispatch [:change-click-msg (str "delete" block-id)])]
+          :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
        [:td (str (:indent row) (:variable row))] 
        [:td [input-text
               :model (:title row)
-              :on-change #(dispatch [:change-title block-id %])]] 
+              :on-change #(dispatch [:change-attr-value block-id :title %])]] 
        [:td (:type row)] 
        [:td (:description row)] 
        ]))

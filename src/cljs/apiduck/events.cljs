@@ -1,6 +1,7 @@
 (ns apiduck.events
     (:require [re-frame.core :as re-frame]
-              [apiduck.db :as db]))
+              [apiduck.db :as db]
+              [apiduck.utils :refer [change-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -13,7 +14,7 @@
    (assoc db :clicked-msg msg)))
 
 (re-frame/reg-event-db
- :change-title
- (fn  [db [_ block-id new-title]]
-   (println (str block-id new-title))
-   db))
+ :change-attr-value
+ (fn  [db [_ block-id attr new-value]]
+   (let [new-schema (change-block (:current-schema db) block-id attr new-value)]
+    (assoc db :current-schema new-schema))))
