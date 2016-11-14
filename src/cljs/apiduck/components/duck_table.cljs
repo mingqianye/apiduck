@@ -7,8 +7,7 @@
 (defn transform-shallow
   [attr-name, attr-schema level]
   (let [gap "\u00A0\u00A0\u00A0"]
-    {:id          attr-name
-     :sort        attr-name
+    {:sort        attr-name
      :variable    (name attr-name)
      :title       (:title attr-schema)
      :description (:description attr-schema)
@@ -27,35 +26,22 @@
          children (for [[k v] (:properties attr-schema)] (transform-recursive k v (inc level)))]
      (cons cur (flatten children)))))
   
-(defn enumerate
-  "(for [[item first? last?] (enumerate coll)] ...)  "
-  [coll]
-  (let [c (dec (count coll))
-        f (fn [index item] [item (= 0 index) (= c index)])]
-    (map-indexed f coll)))
-
-
 (defn data-table
   [rows]
-  (let [mouse-over (reagent/atom nil)]
-  (fn []
-      [:table {:class "table table-hover"}
-        [:thead          
-          [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
-        ]
-        [:tbody
-          (for [[row first? last?] (enumerate rows)]
-            ^{:key (:id row)} [data-row row first? last? mouse-over])
-        ]
-      ]
-    )))
+  [:table {:class "table table-hover"}
+    [:thead          
+      [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
+    ]
+    [:tbody
+     (map (fn [x] (with-meta [(data-row x)] {:key x})) rows)
+     ;(for [r rows] (with-meta [(data-row r)] {:key r}))
+    ]])
 
 
 (defn row-button-demo
   []
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
-      (println "refreshing")
       [:div
         [data-table (transform-recursive @template)]
       ])))
