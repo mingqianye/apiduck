@@ -1,12 +1,12 @@
 (ns apiduck.db
   (:require [apiduck.utils :refer [inject-block-ids]]))
 
-(def default-template
+(def default-template2
   {"title" "1"
    "description" "2"
    "type" "3"})
 
-(def default-template2
+(def default-template
   {
   "title" "Product"
   "description" "A product from Acme's catalog"

@@ -11,7 +11,7 @@
         color (:color row)
         block-id (:block-id row)]
   (fn []
-    (let [mouse-over-row? false]
+    (let [mouse-over-row? @mouse-over]
       [:tr {:style {:background-color color}
         :on-mouse-over (handler-fn (reset! mouse-over true))
         :on-mouse-out  (handler-fn (reset! mouse-over false))}
