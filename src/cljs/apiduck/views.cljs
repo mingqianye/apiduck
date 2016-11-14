@@ -10,6 +10,19 @@
        :label (str "Hello from " @name)
        :level :level1])))
 
+(defn undo-button
+  []
+     (fn []
+       [:div
+       [re-com/button
+        :label "undo"
+        :disabled? (not @(re-frame/subscribe [:undos?]))
+        :on-click #(re-frame/dispatch [:undo]) ]
+       [re-com/button
+        :label "redo"
+        :disabled? (not @(re-frame/subscribe [:redos?]))
+        :on-click #(re-frame/dispatch [:redo]) ]]))
+
 (defn db-printout []
   (let [whole-db (re-frame/subscribe [:whole-db])]
     (fn []
@@ -24,6 +37,7 @@
      :height "100%"
      :children [
                 [re-com/box :child [title]] 
+                [re-com/box :child [undo-button]] 
                 [re-com/h-box  :children [
                                           [re-com/gap :size "15px"]
                                           [re-com/box :child "My Left Pane"]

@@ -55,6 +55,7 @@
   []
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
+      (println "refreshing")
       [:div
         [data-table (transform-recursive @template)]
       ])))

@@ -3,6 +3,7 @@
                  [org.clojure/clojurescript "1.9.229"]
                  [reagent "0.6.0"]
                  [re-frame "0.8.0"]
+                 [day8.re-frame/undo "0.3.2"]
                  [org.clojure/core.async "0.2.391"]
                  [re-com "0.8.3"]
                  [garden "1.3.2"]
