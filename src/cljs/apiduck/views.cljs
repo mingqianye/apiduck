@@ -15,13 +15,13 @@
      (fn []
        [:div
        [re-com/button
-        :label "undo"
+        :label     "undo"
         :disabled? (not @(re-frame/subscribe [:undos?]))
-        :on-click #(re-frame/dispatch [:undo]) ]
+        :on-click  #(re-frame/dispatch [:undo]) ]
        [re-com/button
-        :label "redo"
+        :label     "redo"
         :disabled? (not @(re-frame/subscribe [:redos?]))
-        :on-click #(re-frame/dispatch [:redo]) ]]))
+        :on-click  #(re-frame/dispatch [:redo]) ]]))
 
 (defn db-printout []
   (let [whole-db (re-frame/subscribe [:whole-db])]
