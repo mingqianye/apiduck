@@ -1,9 +1,10 @@
 (ns apiduck.duck-row
-  (:require [re-com.core :refer [row-button checkbox input-text single-dropdown]
+  (:require [re-com.core :refer [hyperlink row-button checkbox input-text single-dropdown]
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
-            [apiduck.type-choices :refer [choices]]))
+            [apiduck.type-choices :refer [choices]]
+            [apiduck.popover-input :refer [popover-input]]))
 
 (defn data-row
   [row]
@@ -45,7 +46,10 @@
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
-       [:td (str (:indent row) (:variable row))] 
+       [:td 
+        [popover-input]
+        [hyperlink 
+         :label (str (:indent row) (:variable row))]]
        [:td [input-text
               :model (:title row)
               :change-on-blur? true
