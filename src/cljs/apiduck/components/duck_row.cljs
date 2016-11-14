@@ -1,7 +1,8 @@
 (ns apiduck.duck-row
-  (:require [re-com.core :refer [row-button checkbox input-text]
+  (:require [re-com.core :refer [row-button checkbox input-text single-dropdown]
                          :refer-macros [handler-fn]]
-            [re-frame.core :refer [dispatch]]))
+            [re-frame.core :refer [dispatch]]
+            [apiduck.type-choices :refer [choices]]))
 
 (defn data-row
   [row first? last? mouse-over]
@@ -47,6 +48,11 @@
        [:td [input-text
               :model (:title row)
               :on-change #(dispatch [:change-attr-value block-id :title %])]] 
-       [:td (:type row)] 
-       [:td (:description row)] 
+       [:td [single-dropdown
+              :model (:type row)
+              :choices choices
+              :on-change #(dispatch [:change-attr-value block-id :type %])]] 
+       [:td [input-text
+              :model (:description row)
+              :on-change #(dispatch [:change-attr-value block-id :description %])]] 
        ]))

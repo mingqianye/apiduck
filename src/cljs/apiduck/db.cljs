@@ -9,7 +9,7 @@
   "properties" {
       "id"    { "title" "Product id" 
                 "description" "The identifier for a product" 
-                "type" "integer" }
+                "type" "number" }
       "name"  { "title" "Product name" 
                 "description" "Name of the product" 
                 "type" "string" }
