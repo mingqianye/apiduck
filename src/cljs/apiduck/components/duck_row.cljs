@@ -36,18 +36,14 @@
           ]] 
        [:td 
          [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x mdc-text-green zmdi-plus-square"
-          :mouse-over-row? mouse-over-row?
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
+          :class           "mdc-text-green"
+          :mouse-over-row? (and mouse-over-row? (= variable-type "object"))
           :tooltip         "Add variables"
-          :disabled?       (and mouse-over-row? (not= variable-type "object"))
           :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
          [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x zmdi-copy"
-          :mouse-over-row? mouse-over-row?
-          :tooltip         "Copy this line"
-          :on-click       #(dispatch [:change-click-msg (str "copy " block-id)])]
-         [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete mdc-text-red"
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"
+          :class           "mdc-text-red"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
