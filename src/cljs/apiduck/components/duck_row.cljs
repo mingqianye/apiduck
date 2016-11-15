@@ -22,19 +22,6 @@
         :style {:background-color "#F7F7F7"}
         :on-mouse-over (handler-fn (reset! mouse-over true))
         :on-mouse-out  (handler-fn (reset! mouse-over false))}
-        [:td 
-          [row-button
-           :md-icon-name    "zmdi zmdi-arrow-back zmdi-hc-rotate-90"
-           :mouse-over-row? mouse-over-row?
-           :tooltip         "Move this line up"
-           :on-click        #(dispatch [:change-click-msg (str "move up" block-id)])
-          ]
-          [row-button
-           :md-icon-name    "zmdi zmdi-arrow-forward zmdi-hc-rotate-90"
-           :mouse-over-row? mouse-over-row?
-           :tooltip         "Move this line down"
-           :on-click        #(dispatch [:change-click-msg (str "move down" block-id)])
-          ]] 
        [:td 
          [row-button
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"

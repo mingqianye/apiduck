@@ -4,11 +4,15 @@
             [apiduck.components.duck-row :refer [data-row]]
             [apiduck.components.colors   :refer [colors]]))
 
+(defn sort-by-variable
+  [input-map]
+  (let [new-children (sort-by :variable (:children input-map))]
+    (into input-map {:children new-children})))
+
 (defn transform-shallow
   [schema level]
   (let [gap "\u00A0\u00A0\u00A0"]
-    {:sort        (:variable schema)
-     :variable    (:variable schema)
+    {:variable    (:variable schema)
      :title       (:title schema)
      :description (:description schema)
      :type        (:type schema)
@@ -30,7 +34,7 @@
   [rows]
   [:table {:class "table"}
     [:thead          
-      [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
+      [:tr [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
     ]
     [:tbody
      (map (fn [x] (with-meta [(data-row x)] {:key x})) rows)
@@ -43,7 +47,7 @@
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
       [:div
-        [data-table (transform-recursive @template)]
+        [data-table (transform-recursive (sort-by-variable @template))]
       ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates
