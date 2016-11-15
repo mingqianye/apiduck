@@ -9,8 +9,13 @@
 (defn data-row
   [row]
   (let [mouse-over (reagent/atom false)
-        color (:color row)
-        block-id (:block-id row)]
+        { color :color 
+          block-id :block-id 
+          title :title
+          description :description
+          variable :variable 
+          indent :indent
+          variable-type :type} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
       [:tr {:style {:background-color color}
@@ -46,8 +51,8 @@
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
-       [:td [hyperlink :label (str (:indent row) (:variable row))]]
-       [:td [popover-input (:title row) (text-input row :title)]] 
-       [:td [popover-input (:type row) (dropdown-input row :type)]] 
-       [:td [popover-input (:description row) (text-input row :description)]] 
+       [:td [hyperlink :label (str indent variable)]]
+       [:td [popover-input title (text-input row :title)]] 
+       [:td [popover-input variable-type (dropdown-input row :type)]] 
+       [:td [popover-input description (text-input row :description)]] 
        ]))))
