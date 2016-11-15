@@ -1,6 +1,7 @@
 (ns apiduck.views
     (:require [re-frame.core :as re-frame]
               [re-com.core :as re-com]
+              [cljs.pprint :refer [pprint]]
               [apiduck.duck-table :as duck-table]))
 
 (defn title []
@@ -29,7 +30,7 @@
       [:div 
         [:hr]
         [:h3 "Database Atom"]
-        [:pre (with-out-str (cljs.pprint/pprint @whole-db))]])))
+        [:pre (with-out-str (pprint @whole-db))]])))
 
 (defn main-panel []
   (fn []

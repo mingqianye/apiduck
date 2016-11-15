@@ -1,10 +1,10 @@
 (ns apiduck.duck-row
-  (:require [re-com.core :refer [hyperlink row-button checkbox input-text single-dropdown]
+  (:require [re-com.core :refer [hyperlink row-button]
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
             [apiduck.type-choices :refer [choices]]
-            [apiduck.popover-input :refer [popover-input]]))
+            [apiduck.popover-input :refer [popover-input dropdown-input text-input]]))
 
 (defn data-row
   [row]
@@ -46,20 +46,8 @@
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
-       [:td 
-        [popover-input]
-        [hyperlink 
-         :label (str (:indent row) (:variable row))]]
-       [:td [input-text
-              :model (:title row)
-              :change-on-blur? true
-              :on-change #(dispatch [:change-attr-value block-id :title %])]] 
-       [:td [single-dropdown
-              :model (:type row)
-              :choices choices
-              :on-change #(dispatch [:change-attr-value block-id :type %])]] 
-       [:td [input-text
-              :model (:description row)
-              :change-on-blur? true
-              :on-change #(dispatch [:change-attr-value block-id :description %])]] 
+       [:td [hyperlink :label (str (:indent row) (:variable row))]]
+       [:td [popover-input (:title row) (text-input row :title)]] 
+       [:td [popover-input (:type row) (dropdown-input row :type)]] 
+       [:td [popover-input (:description row) (text-input row :description)]] 
        ]))))
