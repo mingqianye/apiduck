@@ -1,7 +1,7 @@
-(ns apiduck.popover-input
+(ns apiduck.components.popover-input
   (:require [re-com.core :refer [single-dropdown input-text hyperlink popover-anchor-wrapper popover-content-wrapper]]
             [re-frame.core :refer [dispatch]]
-            [apiduck.type-choices :refer [choices]]
+            [apiduck.components.type-choices :refer [choices]]
             [reagent.core  :as    reagent]))
 
 (defn text-input [row attr]

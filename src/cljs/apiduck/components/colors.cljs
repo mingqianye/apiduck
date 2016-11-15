@@ -1,4 +1,4 @@
-(ns apiduck.colors)
+(ns apiduck.components.colors)
 
 (def colors
   {0 "#ffffff"

@@ -2,7 +2,7 @@
     (:require [re-frame.core :as re-frame]
               [re-com.core :as re-com]
               [cljs.pprint :refer [pprint]]
-              [apiduck.duck-table :as duck-table]))
+              [apiduck.components.duck-table :refer [table]]))
 
 (defn title []
   (let [name (re-frame/subscribe [:name])]
@@ -43,6 +43,6 @@
                                           [re-com/gap :size "15px"]
                                           [re-com/box :child "My Left Pane"]
                                           [re-com/gap :size "15px"]
-                                          [re-com/box :child [duck-table/panel]]
+                                          [re-com/box :child [table]]
                                          ]]
                 [re-com/box :child [db-printout]]]]))

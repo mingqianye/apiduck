@@ -1,8 +1,8 @@
-(ns apiduck.duck-table
+(ns apiduck.components.duck-table
   (:require [re-frame.core    :as re-frame]
             [reagent.core     :as    reagent]
-            [apiduck.duck-row :refer [data-row]]
-            [apiduck.colors   :refer [colors]]))
+            [apiduck.components.duck-row :refer [data-row]]
+            [apiduck.components.colors   :refer [colors]]))
 
 (defn transform-shallow
   [schema level]
@@ -47,6 +47,6 @@
       ])))
 
 ;; core holds a reference to panel, so need one level of indirection to get figwheel updates
-(defn panel
+(defn table
   []
   [row-button-demo])

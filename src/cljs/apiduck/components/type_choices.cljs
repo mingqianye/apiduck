@@ -1,4 +1,4 @@
-(ns apiduck.type-choices)
+(ns apiduck.components.type-choices)
 
 (def choices-array
   [""
