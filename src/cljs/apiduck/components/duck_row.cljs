@@ -49,7 +49,7 @@
           :mouse-over-row? mouse-over-row?
           :tooltip         "Add variables"
           :style           (if (not= variable-type "object") {:display "none"})
-          :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
+          :on-click        #(dispatch [:add-row block-id])]
         ]
        [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 
        [:td {:style {:background-color color}} [popover-input title (text-input row :title)]] 

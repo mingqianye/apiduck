@@ -2,7 +2,7 @@
     (:require [re-frame.core :as re-frame]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :as db]
-              [apiduck.utils :refer [change-block drop-block]]))
+              [apiduck.utils :refer [change-block drop-block add-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -27,4 +27,11 @@
  (undoable "drop row")
  (fn  [db [_ block-id]]
    (let [new-schema (drop-block (:current-schema db) block-id)]
+    (assoc db :current-schema new-schema))))
+
+(re-frame/reg-event-db
+ :add-row
+ (undoable "add row")
+ (fn  [db [_ block-id]]
+   (let [new-schema (add-block (:current-schema db) block-id)]
     (assoc db :current-schema new-schema))))

@@ -1,5 +1,13 @@
 (ns apiduck.utils)
 
+(defn new-child []
+  {:variable    "(undefined)" 
+   :title       "(undefined)" 
+   :description "(undefined)" 
+   :type        "generic" 
+   :block-id    (str (random-uuid))})
+
+
 (defn inject-block-ids
   "recursively inject uuid into a nested map"
   [input-map]
@@ -20,3 +28,9 @@
         new-children (remove is-target (:children input-map))]
     (into input-map 
           {:children (for [c new-children] (drop-block c block-id))})))
+
+(defn add-block
+  [input-map block-id]
+  (if (= block-id (:block-id input-map))
+    (into input-map {:children (cons (new-child) (:children input-map))})
+    (into input-map {:children (for [c (:children input-map)] (add-block c block-id))})))
