@@ -27,14 +27,14 @@
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"
           :class           "mdc-text-red"
           :mouse-over-row? mouse-over-row?
-          :tooltip         "Delete this line"
+          :tooltip         "Delete Property"
           :on-click        #(dispatch [:drop-row block-id])
           ]
          [row-button
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
           :class           "mdc-text-green"
           :mouse-over-row? mouse-over-row?
-          :tooltip         "Add variables"
+          :tooltip         "Add Property"
           :style           (if (not= variable-type "object") {:display "none"})
           :on-click        #(dispatch [:add-row block-id])]
         ]

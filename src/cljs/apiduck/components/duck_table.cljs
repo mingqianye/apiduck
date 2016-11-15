@@ -6,7 +6,9 @@
 
 (defn sort-by-variable
   [input-map]
-  (let [new-children (sort-by :variable (:children input-map))]
+  (let [children     (:children input-map)
+        sorted       (sort-by :variable children)
+        new-children (map sort-by-variable sorted)]
     (into input-map {:children new-children})))
 
 (defn transform-shallow
