@@ -51,7 +51,7 @@
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
-       [:td [hyperlink :label (str indent variable)]]
+       [:td [:span indent] [popover-input variable (text-input row :variable)]] 
        [:td [popover-input title (text-input row :title)]] 
        [:td [popover-input variable-type (dropdown-input row :type)]] 
        [:td [popover-input description (text-input row :description)]] 
