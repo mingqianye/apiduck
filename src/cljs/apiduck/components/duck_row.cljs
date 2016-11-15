@@ -1,5 +1,5 @@
 (ns apiduck.duck-row
-  (:require [re-com.core :refer [hyperlink row-button]
+  (:require [re-com.core :refer [hyperlink row-button md-icon-button]
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
@@ -36,19 +36,22 @@
           ]] 
        [:td 
          [row-button
-          :md-icon-name    "zmdi zmdi-copy"
-          :mouse-over-row? mouse-over-row?
-          :tooltip         "Copy this line"
-          :on-click       #(dispatch [:change-click-msg (str "copy" block-id)])]
-         [row-button
-          :md-icon-name    "zmdi zmdi-edit"
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Edit this line"
-          :on-click       #(dispatch [:change-click-msg (str "edit" block-id)])]
+          :style          {:color "green"}
+          :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
          [row-button
-          :md-icon-name    "zmdi zmdi-delete"
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-copy"
+          :mouse-over-row? mouse-over-row?
+          :tooltip         "Copy this line"
+          :style          {:color "blue"}
+          :on-click       #(dispatch [:change-click-msg (str "copy " block-id)])]
+         [row-button
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete this line"
+          :style          {:color "red"}
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
         ]
        [:td [:span indent] [popover-input variable (text-input row :variable)]] 
