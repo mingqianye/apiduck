@@ -41,7 +41,8 @@
           :class           "mdc-text-red"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete this line"
-          :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
+          :on-click        #(dispatch [:drop-row block-id])
+          ]
          [row-button
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
           :class           "mdc-text-green"
