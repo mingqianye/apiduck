@@ -9,12 +9,12 @@
 (defn data-row
   [row]
   (let [mouse-over (reagent/atom false)
-        { color :color 
-          block-id :block-id 
-          title :title
-          description :description
-          variable :variable 
-          indent :indent
+        { color         :color
+          block-id      :block-id
+          title         :title
+          description   :description
+          variable      :variable
+          indent        :indent
           variable-type :type} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
@@ -36,17 +36,18 @@
           ]] 
        [:td 
          [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
-          :class           "mdc-text-green"
-          :mouse-over-row? (and mouse-over-row? (= variable-type "object"))
-          :tooltip         "Add variables"
-          :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
-         [row-button
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"
           :class           "mdc-text-red"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete this line"
           :on-click       #(dispatch [:change-click-msg (str "delete " block-id)])]
+         [row-button
+          :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
+          :class           "mdc-text-green"
+          :mouse-over-row? mouse-over-row?
+          :tooltip         "Add variables"
+          :style           (if (not= variable-type "object") {:display "none"})
+          :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
         ]
        [:td [:span indent] [popover-input variable (text-input row :variable)]] 
        [:td [popover-input title (text-input row :title)]] 
