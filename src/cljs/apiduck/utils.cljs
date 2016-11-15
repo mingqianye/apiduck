@@ -1,16 +1,15 @@
 (ns apiduck.utils)
 
 (defn inject-block-ids
-  "recursively inject uuid into a nested map when :title is found in the map"
+  "recursively inject uuid into a nested map"
   [input-map]
-  (cond
-    (not (map? input-map)) input-map
-    (contains? input-map :title) (into {:block-id (str (random-uuid))} (for [[k v] input-map] {k (inject-block-ids v)}))
-    :else (into {} (for [[k v] input-map] {k (inject-block-ids v)}))))
+  (into input-map 
+        {:block-id (str (random-uuid)) 
+         :children (map inject-block-ids (:children input-map))}))
 
 (defn change-block
   [input-map block-id attr new-value]
-  (cond
-    (not (map? input-map)) input-map
-    (= (:block-id input-map) block-id) (assoc input-map attr new-value)
-    :else (into {} (for [[k v] input-map] {k (change-block v block-id attr new-value)}))))
+  (if (= block-id (:block-id input-map))
+    (assoc input-map attr new-value)
+    (into input-map
+          {:children (for [c (:children input-map)] (change-block c block-id attr new-value))})))

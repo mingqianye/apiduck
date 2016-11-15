@@ -5,25 +5,25 @@
             [apiduck.colors   :refer [colors]]))
 
 (defn transform-shallow
-  [attr-name, attr-schema level]
+  [schema level]
   (let [gap "\u00A0\u00A0\u00A0"]
-    {:sort        attr-name
-     :variable    (name attr-name)
-     :title       (:title attr-schema)
-     :description (:description attr-schema)
-     :type        (:type attr-schema)
+    {:sort        (:variable schema)
+     :variable    (:variable schema)
+     :title       (:title schema)
+     :description (:description schema)
+     :type        (:type schema)
      :level       level
      :color       (get colors level)
-     :block-id    (:block-id attr-schema)
+     :block-id    (:block-id schema)
      :indent      (reduce str (repeat level gap))
      }))
 
 (defn transform-recursive
-  ([attr-schema]
-   (transform-recursive :root attr-schema 0))
-  ([attr-name attr-schema level]
-   (let [cur      (transform-shallow attr-name attr-schema level)
-         children (for [[k v] (:properties attr-schema)] (transform-recursive k v (inc level)))]
+  ([schema]
+   (transform-recursive schema 0))
+  ([schema level]
+   (let [cur      (transform-shallow schema level)
+         children (for [v (:children schema)] (transform-recursive v (inc level)))]
      (cons cur (flatten children)))))
   
 (defn data-table

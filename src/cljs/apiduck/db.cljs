@@ -7,6 +7,43 @@
    "type" "3"})
 
 (def default-template
+  {:variable "root"
+   :title "Product"
+   :description "A product from Acme's catalog"
+   :type "object"
+   :children [
+      {:variable "id"
+       :title "Product id"
+       :description "The identifier for a product"
+       :type "number"}
+      {:variable "name"
+       :title "Product name"
+       :description "name of a product"
+       :type "string"}
+      {:variable "price"
+       :title "Product price"
+       :description "price of a product"
+       :type "number"}
+      {:variable "address"
+       :title "Product address"
+       :description "address of a product"
+       :type "object"
+       :children [
+          {:variable "city"
+           :title "city name"
+           :description "name of the city"
+           :type "string"}
+          {:variable "country"
+           :title "country name"
+           :description "name of the country"
+           :type "object"
+           :children [
+              {:variable "code"
+               :title "SFDC code"
+               :description "SFDC code of the country"
+               :type "string"}]}]}]})
+
+(def default-template3
   {
   "title" "Product"
   "description" "A product from Acme's catalog"
@@ -52,7 +89,6 @@
 (defn prepare-schema
   [raw-json]
   (-> raw-json
-      clojure.walk/keywordize-keys
       inject-block-ids))
 
 (def default-db
