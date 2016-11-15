@@ -28,7 +28,7 @@
   
 (defn data-table
   [rows]
-  [:table {:class "table table-hover"}
+  [:table {:class "table"}
     [:thead          
       [:tr [:th "Sort"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
     ]

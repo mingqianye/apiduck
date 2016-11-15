@@ -18,7 +18,8 @@
           variable-type :type} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
-      [:tr {:style {:background-color color}
+      [:tr {
+        :style {:background-color "#F7F7F7"}
         :on-mouse-over (handler-fn (reset! mouse-over true))
         :on-mouse-out  (handler-fn (reset! mouse-over false))}
         [:td 
@@ -49,8 +50,8 @@
           :style           (if (not= variable-type "object") {:display "none"})
           :on-click       #(dispatch [:change-click-msg (str "add " block-id)])]
         ]
-       [:td [:span indent] [popover-input variable (text-input row :variable)]] 
-       [:td [popover-input title (text-input row :title)]] 
-       [:td [popover-input variable-type (dropdown-input row :type)]] 
-       [:td [popover-input description (text-input row :description)]] 
+       [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 
+       [:td {:style {:background-color color}} [popover-input title (text-input row :title)]] 
+       [:td {:style {:background-color color}} [popover-input variable-type (dropdown-input row :type)]] 
+       [:td {:style {:background-color color}} [popover-input description (text-input row :description)]] 
        ]))))
