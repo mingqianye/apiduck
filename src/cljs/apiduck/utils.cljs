@@ -5,7 +5,7 @@
    :title       "(undefined)" 
    :description "(undefined)" 
    :type        "generic" 
-   :visible     true
+   :collapsed   false
    :block-id    (str (random-uuid))})
 
 
@@ -13,9 +13,9 @@
   "recursively inject :block-id and :visible into a nested map"
   [input-map]
   (into input-map 
-        {:visible  true
-         :block-id (str (random-uuid)) 
-         :children (map inject-meta (:children input-map))}))
+        {:collapsed  false
+         :block-id   (str (random-uuid)) 
+         :children   (map inject-meta (:children input-map))}))
 
 (defn change-block
   [input-map block-id attr new-value]
@@ -38,10 +38,7 @@
     (into input-map {:children (for [c (:children input-map)] (add-block c block-id))})))
 
 (defn collapse-block
-  ([input-map value]
-    (into input-map {:visible value 
-                     :children (for [c (:children input-map)] (collapse-block c value))}))
-  ([input-map value block-id]
+  [input-map block-id value]
   (if (= block-id (:block-id input-map))
-    (into input-map {:children (for [c (:children input-map)] (collapse-block c value))})
-    (into input-map {:children (for [c (:children input-map)] (collapse-block c value block-id))}))))
+    (into input-map {:collapsed value})
+    (into input-map {:children (for [c (:children input-map)] (collapse-block c block-id value))})))

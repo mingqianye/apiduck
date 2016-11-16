@@ -39,6 +39,6 @@
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
- (fn  [db [_ value block-id]]
-   (let [new-schema (collapse-block (:current-schema db) value block-id)]
+ (fn  [db [_ block-id value]]
+   (let [new-schema (collapse-block (:current-schema db) block-id value)]
     (assoc db :current-schema new-schema))))

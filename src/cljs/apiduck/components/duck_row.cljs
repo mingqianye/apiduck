@@ -16,20 +16,18 @@
           variable      :variable
           indent        :indent
           variable-type :type
-          visible       :visible} row]
+          visible       :visible
+          collapsed     :collapsed} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
       [:tr {:style {:display (if (not= visible true) "none")}}
        [:td 
          [md-icon-button
-          :md-icon-name    (if visible "zmdi zmdi-minus" "zmdi zmdi-plus")
-          :class           "mdc-text-red"
-          :tooltip         "Delete Property"
+          :md-icon-name    (if collapsed "zmdi zmdi-plus" "zmdi zmdi-minus")
+          :tooltip         (if collapsed "Expand" "Collapse")
           :style           (if (not= variable-type "object") {:display "none"})
-          :on-click        #(dispatch [:collapse-row false block-id])
+          :on-click        #(dispatch [:collapse-row block-id (not collapsed)])
           ]
-        
-        
         ]
        [:td (:id row)]
        [:td 
