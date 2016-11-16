@@ -17,28 +17,28 @@
 (re-frame/reg-event-db
  :change-attr-value
  (undoable "changing attr value")
- (fn  [db [_ block-id attr new-value]]
-   (let [new-schema (change-block (:request-schema db) block-id attr new-value)]
-    (assoc db :request-schema new-schema))))
+ (fn  [db [_ schema-type block-id attr new-value]]
+   (let [new-schema (change-block (get db schema-type) block-id attr new-value)]
+    (assoc db schema-type new-schema))))
 
 
 (re-frame/reg-event-db
  :drop-row
  (undoable "drop row")
- (fn  [db [_ block-id]]
-   (let [new-schema (drop-block (:request-schema db) block-id)]
-    (assoc db :request-schema new-schema))))
+ (fn  [db [_ schema-type block-id]]
+   (let [new-schema (drop-block (get db schema-type) block-id)]
+    (assoc db schema-type new-schema))))
 
 (re-frame/reg-event-db
  :add-row
  (undoable "add row")
- (fn  [db [_ block-id]]
-   (let [new-schema (add-block (:request-schema db) block-id)]
-    (assoc db :request-schema new-schema))))
+ (fn  [db [_ schema-type block-id]]
+   (let [new-schema (add-block (get db schema-type) block-id)]
+    (assoc db schema-type new-schema))))
 
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
- (fn  [db [_ block-id value]]
-   (let [new-schema (collapse-block (:request-schema db) block-id value)]
-    (assoc db :request-schema new-schema))))
+ (fn  [db [_ schema-type block-id value]]
+   (let [new-schema (collapse-block (get db schema-type) block-id value)]
+    (assoc db schema-type new-schema))))

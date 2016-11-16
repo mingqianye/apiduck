@@ -17,7 +17,8 @@
           indent        :indent
           variable-type :type
           visible       :visible
-          collapsed     :collapsed} row]
+          collapsed     :collapsed
+          schema-type   :schema-type} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
       [:tr {:style {:display (if (not= visible true) "none")}}
@@ -27,7 +28,7 @@
           :size            :smaller
           :tooltip         (if collapsed "Expand" "Collapse")
           :style           (if (not= variable-type "object") {:display "none"})
-          :on-click        #(dispatch [:collapse-row block-id (not collapsed)])
+          :on-click        #(dispatch [:collapse-row schema-type block-id (not collapsed)])
           ]
         ]
        [:td (:id row)]
@@ -41,7 +42,7 @@
           :size            :smaller
           :style           (if (not mouse-over-row?) {:display "none"})
           :tooltip         "Delete Property"
-          :on-click        #(dispatch [:drop-row block-id])
+          :on-click        #(dispatch [:drop-row schema-type block-id])
           ]
          [md-icon-button
           :md-icon-name    "zmdi zmdi-plus"
@@ -49,7 +50,7 @@
           :size            :smaller
           :style           (if (or (not mouse-over-row?) (not= variable-type "object")) {:display "none"})
           :tooltip         "Add Property"
-          :on-click        #(dispatch [:add-row block-id])]
+          :on-click        #(dispatch [:add-row schema-type block-id])]
         ]
        [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 
        [:td {:style {:background-color color}} [popover-input title (text-input row :title)]] 

@@ -19,6 +19,6 @@
 (defn table-pane
   []
   [:div
-    [table]
-    [add-root-element-button]]
-  )
+    [(table :request-schema)]
+    [add-root-element-button]
+    [table :response-schema]])

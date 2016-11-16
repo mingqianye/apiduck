@@ -36,9 +36,10 @@
                          (transform-recursive v (inc level) child-visible))]
      (cons cur (flatten children)))))
 
-(defn add-id
-  [rows]
-  (map-indexed (fn [i c] (assoc c :id i)) rows))
+(defn add-id-and-schema-type
+  [rows schema-type]
+  (let [inject (fn [index row] (into row {:id index :schema-type schema-type}))]
+    (map-indexed inject rows)))
 
 (defn to-data-rows
   [rows]
@@ -46,20 +47,20 @@
   
 (defn data-table
   [rows]
-  [:table {:class "table table-condensed"}
+  [:table {:class "table"}
     [:thead          
       [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
     [:tbody rows ]])
 
 (defn table
-  []
-  (let [template (re-frame/subscribe [:request-schema])]
+  [schema-type]
+  (let [schema (re-frame/subscribe [schema-type])]
     (fn []
-        (-> @template
-              sort-by-variable    ; sort children recursively
-              transform-recursive ; transform children recursively and flatten to array
-              add-id              ; add row id 0,1,2...
-              rest                ; hide row 0
-              to-data-rows        ; add React meta data, transform to <tr> elements
-              data-table)         ; wrap <tr> elements in <table>
+        (-> @schema
+              sort-by-variable       ; sort children recursively
+              transform-recursive    ; transform children recursively and flatten to array
+              (add-id-and-schema-type schema-type); add row id 0,1,2...
+              rest                   ; hide row 0
+              to-data-rows           ; add React meta data, transform to <tr> elements
+              data-table)            ; wrap <tr> elements in <table>
       )))

@@ -8,7 +8,7 @@
   [input-text
     :model (attr row)
     :change-on-blur? true
-    :on-change #(dispatch [:change-attr-value (:block-id row) attr %])])
+    :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
 
 (defn dropdown-input [row attr]
   [single-dropdown
@@ -16,7 +16,7 @@
    :model (attr row)
    :max-height "100%"
    :width "150px"
-   :on-change #(dispatch [:change-attr-value (:block-id row) attr %])])
+   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
 
 (defn popover-input
   [text popover-body]

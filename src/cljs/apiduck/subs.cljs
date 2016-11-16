@@ -16,3 +16,8 @@
  :request-schema
  (fn [db]
    (:request-schema db)))
+
+(re-frame/reg-sub
+ :response-schema
+ (fn [db]
+   (:response-schema db)))
