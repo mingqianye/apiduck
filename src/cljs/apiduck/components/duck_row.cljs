@@ -22,6 +22,7 @@
         :style {:background-color "#F7F7F7"}
         :on-mouse-over (handler-fn (reset! mouse-over true))
         :on-mouse-out  (handler-fn (reset! mouse-over false))}
+       [:td (:id row)]
        [:td 
          [row-button
           :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"

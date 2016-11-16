@@ -31,16 +31,22 @@
    (let [cur      (transform-shallow schema level)
          children (for [v (:children schema)] (transform-recursive v (inc level)))]
      (cons cur (flatten children)))))
+
+(defn add-id
+  [coll]
+  (map-indexed (fn [i c] (assoc c :id (+ 1 i))) coll))
   
 (defn data-table
   [rows]
   [:table {:class "table"}
     [:thead          
-      [:tr [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
+      [:tr [:th "id"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
     ]
     [:tbody
-     (map (fn [x] (with-meta [(data-row x)] {:key x})) rows)
-     ;(for [r rows] (with-meta [(data-row r)] {:key r}))
+     ;(map (fn [x] (with-meta [(data-row x)] {:key x})) rows)
+     ;(for [r rows] ^{:key r} [data-row r])
+
+     (for [r (add-id rows)] ^{:key r} [data-row r])
     ]])
 
 
