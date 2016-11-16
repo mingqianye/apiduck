@@ -26,7 +26,7 @@
 
 (defn transform-recursive
   ([schema]
-   (transform-recursive schema 0))
+   (transform-recursive schema -1))
   ([schema level]
    (let [cur      (transform-shallow schema level)
          children (for [v (:children schema)] (transform-recursive v (inc level)))]
@@ -34,7 +34,7 @@
 
 (defn add-id
   [rows]
-  (map-indexed (fn [i c] (assoc c :id (+ 1 i))) rows))
+  (map-indexed (fn [i c] (assoc c :id i)) rows))
 
 (defn to-data-rows
   [rows]
@@ -56,6 +56,7 @@
               sort-by-variable
               transform-recursive
               add-id
+              rest
               to-data-rows
               data-table)
       ])))
