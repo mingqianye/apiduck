@@ -8,7 +8,7 @@
 
 (defn add-root-element-button
   []
-  (let [schema (re-frame/subscribe [:current-schema])]
+  (let [schema (re-frame/subscribe [:request-schema])]
   (fn []
     [md-icon-button
       :md-icon-name    "zmdi zmdi-plus-square"

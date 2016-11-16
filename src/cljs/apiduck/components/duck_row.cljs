@@ -24,6 +24,7 @@
        [:td 
          [md-icon-button
           :md-icon-name    (if collapsed "zmdi zmdi-plus" "zmdi zmdi-minus")
+          :size            :smaller
           :tooltip         (if collapsed "Expand" "Collapse")
           :style           (if (not= variable-type "object") {:display "none"})
           :on-click        #(dispatch [:collapse-row block-id (not collapsed)])
@@ -37,13 +38,15 @@
          [md-icon-button
           :md-icon-name    "zmdi zmdi-delete"
           :class           "mdc-text-red"
+          :size            :smaller
           :style           (if (not mouse-over-row?) {:display "none"})
           :tooltip         "Delete Property"
           :on-click        #(dispatch [:drop-row block-id])
           ]
          [md-icon-button
-          :md-icon-name    "zmdi zmdi-plus-square"
+          :md-icon-name    "zmdi zmdi-plus"
           :class           "mdc-text-green"
+          :size            :smaller
           :style           (if (or (not mouse-over-row?) (not= variable-type "object")) {:display "none"})
           :tooltip         "Add Property"
           :on-click        #(dispatch [:add-row block-id])]

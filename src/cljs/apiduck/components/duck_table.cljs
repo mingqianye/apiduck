@@ -46,14 +46,14 @@
   
 (defn data-table
   [rows]
-  [:table {:class "table"}
+  [:table {:class "table table-condensed"}
     [:thead          
       [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
     [:tbody rows ]])
 
 (defn table
   []
-  (let [template (re-frame/subscribe [:current-schema])]
+  (let [template (re-frame/subscribe [:request-schema])]
     (fn []
         (-> @template
               sort-by-variable    ; sort children recursively

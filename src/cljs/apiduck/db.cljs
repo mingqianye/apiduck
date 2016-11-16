@@ -95,5 +95,5 @@
   {
     :name "re-frame"
     :clicked-msg "no click yet"
-    :current-schema (prepare-schema default-template)
+    :request-schema (prepare-schema default-template)
   })

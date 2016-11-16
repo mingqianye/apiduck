@@ -13,6 +13,6 @@
    db))
 
 (re-frame/reg-sub
- :current-schema
+ :request-schema
  (fn [db]
-   (:current-schema db)))
+   (:request-schema db)))
