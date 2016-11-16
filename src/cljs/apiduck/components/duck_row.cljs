@@ -18,21 +18,21 @@
           variable-type :type} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
-      [:tr {
-        :style {:background-color "#F7F7F7"}
-        :on-mouse-over (handler-fn (reset! mouse-over true))
-        :on-mouse-out  (handler-fn (reset! mouse-over false))}
+      [:tr 
        [:td (:id row)]
        [:td 
+        {:style         {:background-color "#F7F7F7"}
+         :on-mouse-over (handler-fn (reset! mouse-over true))
+         :on-mouse-out  (handler-fn (reset! mouse-over false))}
          [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x zmdi-delete"
+          :md-icon-name    "zmdi zmdi-delete"
           :class           "mdc-text-red"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Delete Property"
           :on-click        #(dispatch [:drop-row block-id])
           ]
          [row-button
-          :md-icon-name    "zmdi zmdi-hc-2x zmdi-plus-square"
+          :md-icon-name    "zmdi zmdi-plus-square"
           :class           "mdc-text-green"
           :mouse-over-row? mouse-over-row?
           :tooltip         "Add Property"
