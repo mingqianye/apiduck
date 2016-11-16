@@ -53,12 +53,12 @@
     (fn []
       [:div
         (-> @template
-              sort-by-variable
-              transform-recursive
-              add-id
-              rest
-              to-data-rows
-              data-table)
+              sort-by-variable    ; sort children recursively
+              transform-recursive ; transform children recursively and flatten to array
+              add-id              ; add row id 0,1,2...
+              rest                ; hide row 0
+              to-data-rows        ; add React meta data, transform to <tr> elements
+              data-table)         ; wrap <tr> elements in <table>
       ])))
 
 (defn table
