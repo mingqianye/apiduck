@@ -33,32 +33,33 @@
      (cons cur (flatten children)))))
 
 (defn add-id
-  [coll]
-  (map-indexed (fn [i c] (assoc c :id (+ 1 i))) coll))
+  [rows]
+  (map-indexed (fn [i c] (assoc c :id (+ 1 i))) rows))
+
+(defn to-data-rows
+  [rows]
+  (for [r rows] ^{:key r} [data-row r]))
   
 (defn data-table
   [rows]
   [:table {:class "table"}
     [:thead          
-      [:tr [:th "id"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"] ]
-    ]
-    [:tbody
-     ;(map (fn [x] (with-meta [(data-row x)] {:key x})) rows)
-     ;(for [r rows] ^{:key r} [data-row r])
-
-     (for [r (add-id rows)] ^{:key r} [data-row r])
-    ]])
-
+      [:tr [:th "id"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
+    [:tbody rows ]])
 
 (defn row-button-demo
   []
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
       [:div
-        [data-table (transform-recursive (sort-by-variable @template))]
+        (-> @template
+              sort-by-variable
+              transform-recursive
+              add-id
+              to-data-rows
+              data-table)
       ])))
 
-;; core holds a reference to panel, so need one level of indirection to get figwheel updates
 (defn table
   []
   [row-button-demo])
