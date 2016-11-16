@@ -21,12 +21,12 @@
      :level       level
      :color       (get colors level)
      :block-id    (:block-id schema)
-     :indent      (reduce str (repeat level gap))
+     :indent      (reduce str (repeat (dec level) gap))
      }))
 
 (defn transform-recursive
   ([schema]
-   (transform-recursive schema -1))
+   (transform-recursive schema 0))
   ([schema level]
    (let [cur      (transform-shallow schema level)
          children (for [v (:children schema)] (transform-recursive v (inc level)))]
