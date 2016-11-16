@@ -34,19 +34,18 @@
         {:style         {:background-color "#F7F7F7"}
          :on-mouse-over (handler-fn (reset! mouse-over true))
          :on-mouse-out  (handler-fn (reset! mouse-over false))}
-         [row-button
+         [md-icon-button
           :md-icon-name    "zmdi zmdi-delete"
           :class           "mdc-text-red"
-          :mouse-over-row? mouse-over-row?
+          :style           (if (not mouse-over-row?) {:display "none"})
           :tooltip         "Delete Property"
           :on-click        #(dispatch [:drop-row block-id])
           ]
-         [row-button
+         [md-icon-button
           :md-icon-name    "zmdi zmdi-plus-square"
           :class           "mdc-text-green"
-          :mouse-over-row? mouse-over-row?
+          :style           (if (or (not mouse-over-row?) (not= variable-type "object")) {:display "none"})
           :tooltip         "Add Property"
-          :style           (if (not= variable-type "object") {:display "none"})
           :on-click        #(dispatch [:add-row block-id])]
         ]
        [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 

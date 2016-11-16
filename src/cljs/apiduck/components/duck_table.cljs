@@ -48,7 +48,7 @@
   [rows]
   [:table {:class "table"}
     [:thead          
-      [:tr [:th] [:th "id"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
+      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
     [:tbody rows ]])
 
 (defn table
