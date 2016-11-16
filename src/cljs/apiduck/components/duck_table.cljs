@@ -47,11 +47,10 @@
       [:tr [:th "id"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
     [:tbody rows ]])
 
-(defn row-button-demo
+(defn table
   []
   (let [template (re-frame/subscribe [:current-schema])]
     (fn []
-      [:div
         (-> @template
               sort-by-variable    ; sort children recursively
               transform-recursive ; transform children recursively and flatten to array
@@ -59,8 +58,4 @@
               rest                ; hide row 0
               to-data-rows        ; add React meta data, transform to <tr> elements
               data-table)         ; wrap <tr> elements in <table>
-      ])))
-
-(defn table
-  []
-  [row-button-demo])
+      )))
