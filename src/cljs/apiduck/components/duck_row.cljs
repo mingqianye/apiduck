@@ -15,10 +15,22 @@
           description   :description
           variable      :variable
           indent        :indent
-          variable-type :type} row]
+          variable-type :type
+          visible       :visible} row]
   (fn []
     (let [mouse-over-row? @mouse-over]
-      [:tr 
+      [:tr {:style {:display (if (not= visible true) "none")}}
+       [:td 
+         [md-icon-button
+          :md-icon-name    (if visible "zmdi zmdi-minus" "zmdi zmdi-plus")
+          :class           "mdc-text-red"
+          :tooltip         "Delete Property"
+          :style           (if (not= variable-type "object") {:display "none"})
+          :on-click        #(dispatch [:collapse-row false block-id])
+          ]
+        
+        
+        ]
        [:td (:id row)]
        [:td 
         {:style         {:background-color "#F7F7F7"}

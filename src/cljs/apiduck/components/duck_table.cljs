@@ -22,6 +22,7 @@
      :color       (get colors level)
      :block-id    (:block-id schema)
      :indent      (reduce str (repeat (dec level) gap))
+     :visible     (:visible schema)
      }))
 
 (defn transform-recursive

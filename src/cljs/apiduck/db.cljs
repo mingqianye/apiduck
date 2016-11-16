@@ -1,5 +1,5 @@
 (ns apiduck.db
-  (:require [apiduck.utils :refer [inject-block-ids]]))
+  (:require [apiduck.utils :refer [inject-meta]]))
 
 (def default-template2
   {"title" "1"
@@ -89,7 +89,7 @@
 (defn prepare-schema
   [raw-json]
   (-> raw-json
-      inject-block-ids))
+      inject-meta))
 
 (def default-db
   {
