@@ -14,6 +14,8 @@
   [single-dropdown
    :choices choices
    :model (attr row)
+   :max-height "100%"
+   :width "150px"
    :on-change #(dispatch [:change-attr-value (:block-id row) attr %])])
 
 (defn popover-input

@@ -1,7 +1,3 @@
-body {
-  color: red;
-}
-
-.level1 {
-  color: green;
+.table tbody>tr>td {
+  vertical-align: middle;
 }
