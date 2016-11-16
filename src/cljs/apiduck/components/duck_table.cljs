@@ -1,6 +1,8 @@
 (ns apiduck.components.duck-table
   (:require [re-frame.core    :as re-frame]
             [reagent.core     :as    reagent]
+            [re-com.core :refer [md-icon-button]]
+            [re-frame.core :refer [dispatch]]
             [apiduck.components.duck-row :refer [data-row]]
             [apiduck.components.colors   :refer [colors]]))
 
@@ -56,6 +58,7 @@
   [schema-type]
   (let [schema (re-frame/subscribe [schema-type])]
     (fn []
+      [:div
         (-> @schema
               sort-by-variable       ; sort children recursively
               transform-recursive    ; transform children recursively and flatten to array
@@ -63,4 +66,9 @@
               rest                   ; hide row 0
               to-data-rows           ; add React meta data, transform to <tr> elements
               data-table)            ; wrap <tr> elements in <table>
+        [md-icon-button
+          :md-icon-name    "zmdi zmdi-plus-square"
+          :class           "mdc-text-green"
+          :tooltip         "Add Property"
+          :on-click        #(dispatch [:add-row schema-type (:block-id @schema)])]]
       )))
