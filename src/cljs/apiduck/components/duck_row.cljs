@@ -13,27 +13,27 @@
     :change-on-blur? true
     :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
 
-(defn dropdown-input [row attr]
+(defn dropdown-input [row]
   [single-dropdown
    :choices choices
-   :model (attr row)
+   :model (:variable-type row)
    :max-height "100%"
    :width "150px"
-   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
+   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) :type %])])
 
 (defn data-row
   [row]
   (let [mouse-over (reagent/atom false)
-        { color         :color
-          block-id      :block-id
-          title         :title
-          description   :description
-          variable      :variable
-          indent        :indent
-          variable-type :type
-          visible       :visible
-          collapsed     :collapsed
-          schema-type   :schema-type} row]
+        { :keys [color         
+                 block-id      
+                 title         
+                 description   
+                 variable      
+                 indent        
+                 variable-type 
+                 visible       
+                 collapsed     
+                 schema-type] } row]
   (fn []
     (let [mouse-over-row? @mouse-over]
       [:tr {:style {:display (if (not= visible true) "none")}}
@@ -69,6 +69,6 @@
         ]
        [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 
        [:td {:style {:background-color color}} [popover-input title (text-input row :title)]] 
-       [:td {:style {:background-color color}} [popover-input variable-type (dropdown-input row :type)]] 
+       [:td {:style {:background-color color}} [popover-input variable-type (dropdown-input row)]] 
        [:td {:style {:background-color color}} [popover-input description (text-input row :description)]] 
        ]))))

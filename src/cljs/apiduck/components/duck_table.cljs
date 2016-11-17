@@ -16,16 +16,16 @@
 (defn transform-shallow
   [schema level visible]
   (let [gap "\u00A0\u00A0\u00A0"]
-    {:variable    (:variable schema)
-     :title       (:title schema)
-     :description (:description schema)
-     :type        (:type schema)
-     :level       level
-     :color       (get colors level)
-     :block-id    (:block-id schema)
-     :indent      (reduce str (repeat (dec level) gap))
-     :visible     visible
-     :collapsed   (:collapsed schema)
+    {:variable      (:variable schema)
+     :title         (:title schema)
+     :description   (:description schema)
+     :variable-type (:type schema)
+     :level         level
+     :color         (get colors level)
+     :block-id      (:block-id schema)
+     :indent        (reduce str (repeat (dec level) gap))
+     :visible       visible
+     :collapsed     (:collapsed schema)
      }))
 
 (defn transform-recursive
