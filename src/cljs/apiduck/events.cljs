@@ -15,6 +15,13 @@
    (assoc db :clicked-msg msg)))
 
 (re-frame/reg-event-db
+  :change-doc
+  (undoable "changing doc attr value")
+  (fn  [db [_ attr new-value]]
+    (assoc db attr new-value)))
+
+
+(re-frame/reg-event-db
  :change-attr-value
  (undoable "changing attr value")
  (fn  [db [_ schema-type block-id attr new-value]]

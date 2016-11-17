@@ -1,10 +1,25 @@
 (ns apiduck.components.duck-row
-  (:require [re-com.core :refer [hyperlink row-button md-icon-button]
+  (:require [re-com.core :refer [hyperlink row-button md-icon-button input-text single-dropdown]
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
             [apiduck.components.type-choices :refer [choices]]
-            [apiduck.components.popover-input :refer [popover-input dropdown-input text-input]]))
+            [apiduck.components.popover-input :refer [popover-input]]
+            ))
+
+(defn text-input [row attr]
+  [input-text
+    :model (attr row)
+    :change-on-blur? true
+    :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
+
+(defn dropdown-input [row attr]
+  [single-dropdown
+   :choices choices
+   :model (attr row)
+   :max-height "100%"
+   :width "150px"
+   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
 
 (defn data-row
   [row]

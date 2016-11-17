@@ -4,20 +4,6 @@
             [apiduck.components.type-choices :refer [choices]]
             [reagent.core  :as    reagent]))
 
-(defn text-input [row attr]
-  [input-text
-    :model (attr row)
-    :change-on-blur? true
-    :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
-
-(defn dropdown-input [row attr]
-  [single-dropdown
-   :choices choices
-   :model (attr row)
-   :max-height "100%"
-   :width "150px"
-   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) attr %])])
-
 (defn popover-input
   [text popover-body]
   (let [showing? (reagent/atom false)]

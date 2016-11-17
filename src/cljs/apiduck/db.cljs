@@ -93,8 +93,10 @@
 
 (def default-db
   {
-    :name "re-frame"
     :clicked-msg "no click yet"
+    :name "name of the api"
+    :description "description of the api"
+    :request-type "post"
     :request-schema (prepare-schema default-template)
     :response-schema (prepare-schema default-template)
   })
