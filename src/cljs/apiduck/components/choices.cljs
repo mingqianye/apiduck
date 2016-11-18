@@ -12,5 +12,8 @@
    "array<object>"
    "array<generic>"])
 
+(def http-request-choices
+  ["Get" "Post" "Put" "Delete" ])
+
 ;(def choices
 ;  (map (fn [x] {:id x :label x}) choices-array))

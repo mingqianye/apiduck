@@ -5,7 +5,7 @@
               [apiduck.components.table-pane :refer [table-pane]]))
 
 (defn title []
-  (let [name (re-frame/subscribe [:name])]
+  (let [name (re-frame/subscribe [:api-name])]
     (fn []
       [re-com/title
        :label (str "Hello from " @name)

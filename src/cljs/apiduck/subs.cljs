@@ -3,9 +3,19 @@
     (:require [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
- :name
+ :api-name
  (fn [db]
-   (:name db)))
+   (:api-name db)))
+
+(re-frame/reg-sub
+ :http-request-type
+ (fn [db]
+   (:http-request-type db)))
+
+(re-frame/reg-sub
+ :api-description
+ (fn [db]
+   (:api-description db)))
 
 (re-frame/reg-sub
  :whole-db

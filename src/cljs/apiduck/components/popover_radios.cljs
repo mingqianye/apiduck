@@ -1,7 +1,6 @@
 (ns apiduck.components.popover-radios
   (:require [re-com.core :refer [radio-button single-dropdown input-text hyperlink popover-anchor-wrapper popover-content-wrapper]]
             [re-frame.core :refer [dispatch]]
-            [apiduck.components.type-choices :refer [choices]]
             [reagent.core  :as    reagent]))
 
 (defn popover-radios
@@ -13,7 +12,7 @@
        :showing? showing?
        :position :right-center
        :anchor   [hyperlink
-                  :label    value
+                  :label    @current
                   :on-click #(reset! showing? true)]
        :popover  [popover-content-wrapper
                   :body
@@ -23,6 +22,6 @@
                         [hyperlink
                          :label       c
                          :style (into {:color "#337ab7"} (if (= c @current) {:font-weight "bold"} {}))
-                         :on-click #(do (reset! current c) (on-change c))
+                         :on-click #(do (reset! current c) (on-change c) (reset! showing? false))
                          ]))]
                   :on-cancel #(reset! showing? false)]])))
