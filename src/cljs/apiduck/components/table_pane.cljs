@@ -4,7 +4,7 @@
             [re-frame.core :refer [dispatch]]
             [re-com.core :refer [md-icon-button label input-text hyperlink]
                          :refer-macros [handler-fn]]
-            [apiduck.components.popover-input :refer [popover-input]]
+            [apiduck.components.popover-radios :refer [popover-radios]]
             [apiduck.components.editable :refer [editable-text]]
             [apiduck.components.duck-table :refer [table]]))
 

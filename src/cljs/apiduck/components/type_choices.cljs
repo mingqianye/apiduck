@@ -1,6 +1,6 @@
 (ns apiduck.components.type-choices)
 
-(def choices-array
+(def choices
   ["generic"
    "boolean"
    "number"
@@ -12,5 +12,5 @@
    "array<object>"
    "array<generic>"])
 
-(def choices
-  (map (fn [x] {:id x :label x}) choices-array))
+;(def choices
+;  (map (fn [x] {:id x :label x}) choices-array))

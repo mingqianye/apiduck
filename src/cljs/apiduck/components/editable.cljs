@@ -3,7 +3,7 @@
             [re-com.core :refer [md-icon-button label input-text hyperlink radio-button]])) 
 
 (defn editable-text
-  [& {:keys [value on-save] :as args}]
+  [& {:keys [value on-save]}]
   (let [text          (reagent/atom value)
         edit-mode     (reagent/atom false)
         save-and-exit #(do (on-save @text) (reset! edit-mode false))]

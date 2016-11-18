@@ -5,32 +5,8 @@
             [re-frame.core :refer [dispatch]]
             [apiduck.components.type-choices :refer [choices]]
             [apiduck.components.editable :refer [editable-text]]
-            [apiduck.components.popover-input :refer [popover-input]]
+            [apiduck.components.popover-radios :refer [popover-radios]]
             ))
-
-(defn dropdown-input [row]
-  [single-dropdown
-   :choices choices
-   :model (:variable-type row)
-   :max-height "100%"
-   :width "150px"
-   :on-change #(dispatch [:change-attr-value (:schema-type row) (:block-id row) :type %])])
-
-(defn radio-types []
-  (let [color (reagent/atom "green")
-        _ (println "here")]
-    (fn []
-  [:div
-   (println color)
-   (doall (for [c ["red" "green" "blue"]]  
-             ^{:key c}
-             [radio-button
-              :label       c
-              :value       c
-              :model       @color
-              :label-style (if (= c @color) {:color c :font-weight "bold"})
-              :on-change   #(reset! color c)]))
-   ])))
 
 (defn data-row
   [row]
@@ -87,10 +63,12 @@
         [editable-text 
          :value title
          :on-save #(dispatch [:change-attr-value schema-type block-id :title %])]] 
-       ;[:td {:style {:background-color color}} 
-       ; [popover-input variable-type (dropdown-input row)]] 
        [:td {:style {:background-color color}} 
-        [popover-input variable-type (radio-types)]] 
+        [popover-radios
+         :value variable-type
+         :choices choices
+         :on-change #(dispatch [:change-attr-value schema-type block-id :type %])
+         ]] 
        [:td {:style {:background-color color}} 
         [editable-text 
          :value description
