@@ -26,6 +26,7 @@
      :indent        (reduce str (repeat (dec level) gap))
      :visible       visible
      :collapsed     (:collapsed schema)
+     :expandable    (and (= "object" (:type schema)) (not-empty (:children schema)))
      }))
 
 (defn transform-recursive

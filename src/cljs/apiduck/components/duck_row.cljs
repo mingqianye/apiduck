@@ -20,6 +20,7 @@
                  variable-type 
                  visible       
                  collapsed     
+                 expandable
                  schema-type] } row]
   (fn []
     (let [mouse-over-row? @mouse-over]
@@ -29,7 +30,7 @@
           :md-icon-name    (if collapsed "zmdi zmdi-plus" "zmdi zmdi-minus")
           :size            :smaller
           :tooltip         (if collapsed "Expand" "Collapse")
-          :style           (if (not= variable-type "object") {:display "none"})
+          :style           (if (not expandable) {:display "none"})
           :on-click        #(dispatch [:collapse-row schema-type block-id (not collapsed)])
           ]
         ]
