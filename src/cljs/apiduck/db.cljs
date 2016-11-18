@@ -95,6 +95,7 @@
   {
     :clicked-msg "no click yet"
     :name "name of the api"
+    :http-request-type "post"
     :description "description of the api"
     :request-type "post"
     :request-schema (prepare-schema default-template)
