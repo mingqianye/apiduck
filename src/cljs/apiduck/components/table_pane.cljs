@@ -12,7 +12,7 @@
 (defn api-name []
   (let [api-name (re-frame/subscribe [:api-name])]
     (fn []
-      [editable-text 
+      [editable-text
        :value @api-name
        :on-save #(dispatch [:change-doc :api-name %])])))
 
