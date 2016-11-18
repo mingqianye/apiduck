@@ -1,6 +1,6 @@
-(ns apiduck.components.type-choices)
+(ns apiduck.components.choices)
 
-(def choices
+(def variable-type-choices
   ["generic"
    "boolean"
    "number"

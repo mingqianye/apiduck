@@ -3,7 +3,7 @@
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
-            [apiduck.components.type-choices :refer [choices]]
+            [apiduck.components.choices :refer [variable-type-choices]]
             [apiduck.components.editable :refer [editable-text]]
             [apiduck.components.popover-radios :refer [popover-radios]]
             ))
@@ -67,7 +67,7 @@
        [:td {:style {:background-color color}} 
         [popover-radios
          :value variable-type
-         :choices choices
+         :choices variable-type-choices
          :on-change #(dispatch [:change-attr-value schema-type block-id :type %])
          ]] 
        [:td {:style {:background-color color}} 
