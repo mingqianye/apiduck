@@ -19,7 +19,7 @@
                   :on-change  #(reset! text (-> % .-target .-value))
                   :on-blur    save-and-exit
                   :on-key-down #(case (.-which %)
-                                  13 (if-not use-textarea save-and-exit)
+                                  13 (if (not= element :textarea) (save-and-exit))
                                   nil)}]
         [:span {:style {:display "inline-block"}}
         [hyperlink 
