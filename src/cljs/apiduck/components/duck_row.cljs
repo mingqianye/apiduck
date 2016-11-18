@@ -4,6 +4,7 @@
             [reagent.core  :as    reagent]
             [re-frame.core :refer [dispatch]]
             [apiduck.components.type-choices :refer [choices]]
+            [apiduck.components.editable :refer [editable-text]]
             [apiduck.components.popover-input :refer [popover-input]]
             ))
 
@@ -67,8 +68,19 @@
           :tooltip         "Add Property"
           :on-click        #(dispatch [:add-row schema-type block-id])]
         ]
-       [:td {:style {:background-color color}} [:span indent] [popover-input variable (text-input row :variable)]] 
-       [:td {:style {:background-color color}} [popover-input title (text-input row :title)]] 
-       [:td {:style {:background-color color}} [popover-input variable-type (dropdown-input row)]] 
-       [:td {:style {:background-color color}} [popover-input description (text-input row :description)]] 
+       [:td {:style {:background-color color}} 
+        [:span indent] 
+        [editable-text 
+         :value variable 
+         :on-save #(dispatch [:change-attr-value schema-type block-id :variable %])]] 
+       [:td {:style {:background-color color}} 
+        [editable-text 
+         :value title
+         :on-save #(dispatch [:change-attr-value schema-type block-id :title %])]] 
+       [:td {:style {:background-color color}} 
+        [popover-input variable-type (dropdown-input row)]] 
+       [:td {:style {:background-color color}} 
+        [editable-text 
+         :value description
+         :on-save #(dispatch [:change-attr-value schema-type block-id :description %])]] 
        ]))))

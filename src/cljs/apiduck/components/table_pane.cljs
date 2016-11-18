@@ -15,6 +15,7 @@
     [editable-text 
      :value "text" 
      :on-save #(dispatch [:change-doc :name %]) ]
+    [:hr]
     [label :label "Request"]
     [table :request-schema]
     [:hr]

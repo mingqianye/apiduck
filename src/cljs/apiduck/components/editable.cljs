@@ -17,7 +17,8 @@
                  :on-key-down #(case (.-which %)
                                  13 (save-and-exit)
                                  nil)}]
+        [:span {:style {:display "inline-block"}}
         [hyperlink 
          :label    @text 
-         :on-click #(reset! edit-mode true)]
+         :on-click #(reset! edit-mode true)]]
         ))))
