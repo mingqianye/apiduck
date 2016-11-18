@@ -7,13 +7,13 @@
   [& {:keys [value choices on-change]}]
   (let [showing? (reagent/atom false)
         current  (reagent/atom value)]
-    (fn []
+    (fn [& {:keys [value choices on-change]}]
       [popover-anchor-wrapper
        :showing? showing?
        :position :right-center
        :anchor   [hyperlink
-                  :label    @current
-                  :on-click #(reset! showing? true)]
+                  :label    value
+                  :on-click #(do (reset! showing? true) (reset! current value))]
        :popover  [popover-content-wrapper
                   :body
                     [:div
