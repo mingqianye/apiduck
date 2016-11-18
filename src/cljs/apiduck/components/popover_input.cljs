@@ -10,10 +10,10 @@
     (fn []
       [popover-anchor-wrapper
        :showing? showing?
-       :position :below-center
+       :position :right-center
        :anchor   [hyperlink
                   :label    text
                   :on-click #(reset! showing? true)]
        :popover  [popover-content-wrapper
-                  :body     popover-body
+                  :body      (popover-body)
                   :on-cancel #(reset! showing? false)]])))
