@@ -18,11 +18,20 @@
          :children   (map inject-meta (:children input-map))}))
 
 (defn change-block
-  [input-map block-id attr new-value]
+ [input-map block-id attr new-value]
   (if (= block-id (:block-id input-map))
     (assoc input-map attr new-value)
     (into input-map
           {:children (for [c (:children input-map)] (change-block c block-id attr new-value))})))
+
+(defn change-block-type
+ [input-map block-id new-type]
+  (if (= block-id (:block-id input-map))
+    (if (not= new-type "object")
+      (assoc (dissoc input-map :children) :type new-type)
+      (assoc input-map :type new-type))
+    (assoc input-map
+           :children (for [c (:children input-map)] (change-block-type c block-id new-type)))))
 
 (defn drop-block
   [input-map block-id]

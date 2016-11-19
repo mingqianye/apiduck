@@ -2,7 +2,7 @@
     (:require [re-frame.core :as re-frame]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :as db]
-              [apiduck.utils :refer [change-block drop-block add-block collapse-block]]))
+              [apiduck.utils :refer [change-block-type change-block drop-block add-block collapse-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -28,6 +28,12 @@
    (let [new-schema (change-block (get db schema-type) block-id attr new-value)]
     (assoc db schema-type new-schema))))
 
+(re-frame/reg-event-db
+ :change-variable-type
+ (undoable "changing variable type")
+ (fn  [db [_ schema-type block-id new-type]]
+   (let [new-schema (change-block-type (get db schema-type) block-id new-type)]
+    (assoc db schema-type new-schema))))
 
 (re-frame/reg-event-db
  :drop-row

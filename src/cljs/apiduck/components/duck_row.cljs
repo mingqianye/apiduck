@@ -68,7 +68,7 @@
         [popover-radios
          :value variable-type
          :choices variable-type-choices
-         :on-change #(dispatch [:change-attr-value schema-type block-id :type %])
+         :on-change #(dispatch [:change-variable-type schema-type block-id %])
          ]] 
        [:td {:style {:background-color color}} 
         [editable-text 
