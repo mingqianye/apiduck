@@ -100,10 +100,13 @@
     :app-config app-config
     :loading false
     :clicked-msg "no click yet"
-    :api-name "name of the api"
-    :http-request-type "Post"
-    :api-description "description of the api"
-    :request-type "post"
-    :request-schema (prepare-schema default-template)
-    :response-schema (prepare-schema default-template)
+    :current-doc-index 0
+    :docs [{
+      :api-name "name of the api"
+      :http-request-type "Post"
+      :api-description "description of the api"
+      :request-type "post"
+      :request-schema (prepare-schema default-template)
+      :response-schema (prepare-schema default-template)
+    }]
   })

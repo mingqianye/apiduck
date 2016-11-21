@@ -16,11 +16,15 @@
  (fn  [db [_ msg]]
    (assoc db :clicked-msg msg)))
 
+(defn- current-doc [db]
+  (get (:docs db) (:current-doc-index db)))
+
 (re-frame/reg-event-db
   :change-doc
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
-    (assoc db attr new-value)))
+    (let [new-doc (assoc (current-doc db) attr new-value)]
+    (assoc db :docs (assoc (:docs db) (:current-doc-index db) new-doc)))))
 
 
 (re-frame/reg-event-db
