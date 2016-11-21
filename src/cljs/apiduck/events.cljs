@@ -16,50 +16,46 @@
  (fn  [db [_ msg]]
    (assoc db :clicked-msg msg)))
 
-(defn- current-doc [db]
-  (get (:docs db) (:current-doc-index db)))
-
 (re-frame/reg-event-db
   :change-doc
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
-    (assoc-in db [:docs (:current-doc-index db) attr] 
-              new-value)))
+    (assoc-in db [:docs (:current-doc-index db) attr] new-value)))
 
 (re-frame/reg-event-db
  :change-attr-value
  (undoable "changing attr value")
  (fn  [db [_ schema-type block-id attr new-value]]
-   (let [new-schema (change-block (get db schema-type) block-id attr new-value)]
-    (assoc db schema-type new-schema))))
+   (let [f #(change-block % block-id attr new-value)]
+    (update-in db [:docs (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :change-variable-type
  (undoable "changing variable type")
  (fn  [db [_ schema-type block-id new-type]]
-   (let [new-schema (change-block-type (get db schema-type) block-id new-type)]
-    (assoc db schema-type new-schema))))
+   (let [f #(change-block-type % block-id new-type)]
+    (update-in db [:docs (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :drop-row
  (undoable "drop row")
  (fn  [db [_ schema-type block-id]]
-   (let [new-schema (drop-block (get db schema-type) block-id)]
-    (assoc db schema-type new-schema))))
+   (let [f #(drop-block % block-id)]
+    (update-in db [:docs (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :add-row
  (undoable "add row")
  (fn  [db [_ schema-type block-id]]
-   (let [new-schema (add-block (get db schema-type) block-id)]
-    (assoc db schema-type new-schema))))
+   (let [f #(add-block % block-id)]
+    (update-in db [:docs (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
- (fn       [db [_ schema-type block-id value]]
-   (let [new-schema (collapse-block (get db schema-type) block-id value)]
-    (assoc db schema-type new-schema))))
+ (fn [db [_ schema-type block-id value]]
+   (let [f #(collapse-block % block-id value)]
+    (update-in db [:docs (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :inject-dev-env
