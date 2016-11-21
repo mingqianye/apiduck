@@ -23,9 +23,8 @@
   :change-doc
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
-    (let [new-doc (assoc (current-doc db) attr new-value)]
-    (assoc db :docs (assoc (:docs db) (:current-doc-index db) new-doc)))))
-
+    (assoc-in db [:docs (:current-doc-index db) attr] 
+              new-value)))
 
 (re-frame/reg-event-db
  :change-attr-value
