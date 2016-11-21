@@ -4,7 +4,7 @@
               [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :as db]
-              [apiduck.utils :refer [change-block-type change-block drop-block add-block collapse-block]]))
+              [apiduck.utils :refer [cook-docs change-block-type change-block drop-block add-block collapse-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -81,3 +81,20 @@
     db))
 
 
+(re-frame/reg-event-fx                    ;; note the trailing -fx
+  :load-template                      ;; usage:  (dispatch [:handler-with-http])
+  (fn [{:keys [db]} _]                    ;; the first param will be "world"
+    {:db   (assoc db :loading true)   ;; causes the twirly-waiting-dialog to show??
+     :http-xhrio {:method          :get
+                  :uri             (str (get-in db [:app-config :host]) "/hello")
+                  :timeout         8000                                           ;; optional see API docs
+                  :response-format (ajax/json-response-format {:keywords? true})  ;; IMPORTANT!: You must provide this.
+                  :on-success      [:initialize-template]
+                  :on-failure      [:bad-http-result]}}))
+
+
+(re-frame/reg-event-db
+  :initialize-template
+  (fn [db [_ docs]]
+    (println "initializing template")
+    (assoc db :docs (cook-docs db/default-docs))))

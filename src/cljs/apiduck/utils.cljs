@@ -12,10 +12,10 @@
 (defn inject-meta
   "recursively inject :block-id and :visible into a nested map"
   [input-map]
-  (into input-map 
-        {:collapsed  false
-         :block-id   (str (random-uuid)) 
-         :children   (map inject-meta (:children input-map))}))
+  (-> input-map
+      (assoc :collapsed false)
+      (assoc :block-id (str (random-uuid)))
+      (update :children #(map inject-meta %))))
 
 (defn change-block
  [input-map block-id attr new-value]
@@ -51,3 +51,9 @@
   (if (= block-id (:block-id input-map))
     (into input-map {:collapsed value})
     (into input-map {:children (for [c (:children input-map)] (collapse-block c block-id value))})))
+
+(defn cook-docs [docs]
+  (let [f (fn [doc] (-> doc
+                        (update :request-schema inject-meta)
+                        (update :response-schema inject-meta)))]
+    (vec (map f docs))))

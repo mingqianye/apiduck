@@ -1,7 +1,6 @@
-(ns apiduck.db
-  (:require [apiduck.utils :refer [inject-meta]]))
+(ns apiduck.default-template)
 
-(def default-template
+(def default-schema
   {:variable "root"
    :title "Product"
    :description "A product from Acme's catalog"
@@ -38,24 +37,12 @@
                :description "SFDC code of the country"
                :type "string"}]}]}]})
 
-(def default-docs
-  [{
-   :api-name "name of the api"
-   :http-request-type "Post"
-   :api-description "description of the api"
-   :request-type "post"
-   :request-schema default-template
-   :response-schema default-template
-  }])
-
-(def app-config
-  {:host "http://pppproduction:3449"})
-
-
-(def default-db
-  {
-    :app-config app-config
-    :loading false
-    :clicked-msg "no click yet"
-    :current-doc-index 0
-  })
+(def template
+    {:docs [{
+      :api-name "name of the api"
+      :http-request-type "Post"
+      :api-description "description of the api"
+      :request-type "post"
+      :request-schema default-schema
+      :response-schema default-schema
+    }]})
