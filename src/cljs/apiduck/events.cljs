@@ -58,12 +58,18 @@
    (let [new-schema (collapse-block (get db schema-type) block-id value)]
     (assoc db schema-type new-schema))))
 
+(re-frame/reg-event-db
+ :inject-dev-env
+ (fn  [db [_ app-config]]
+   (assoc db :app-config app-config)))
+
+
 (re-frame/reg-event-fx                    ;; note the trailing -fx
   :handler-with-http                      ;; usage:  (dispatch [:handler-with-http])
   (fn [{:keys [db]} _]                    ;; the first param will be "world"
     {:db   (assoc db :loading true)   ;; causes the twirly-waiting-dialog to show??
      :http-xhrio {:method          :get
-                  :uri             "http://localhost:3449/hello"
+                  :uri             (str (get-in db [:app-config :host]) "/hello")
                   :timeout         8000                                           ;; optional see API docs
                   :response-format (ajax/json-response-format {:keywords? true})  ;; IMPORTANT!: You must provide this.
                   :on-success      [:good-http-result]

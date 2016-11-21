@@ -86,6 +86,10 @@
   }
   })
 
+(def app-config
+  {:host "http://pppproduction:3449"})
+
+
 (defn prepare-schema
   [raw-json]
   (-> raw-json
@@ -93,6 +97,7 @@
 
 (def default-db
   {
+    :app-config app-config
     :loading false
     :clicked-msg "no click yet"
     :api-name "name of the api"
