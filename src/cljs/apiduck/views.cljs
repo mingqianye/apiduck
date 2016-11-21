@@ -32,12 +32,19 @@
         [:h3 "Database Atom"]
         [:pre (with-out-str (pprint @whole-db))]])))
 
+(defn refresh_button []
+  [re-com/hyperlink
+   :label "refresh page"
+   :on-click #(do (println "refreshing!") (re-frame/dispatch [:handler-with-http]))]
+  )
+
 (defn main-panel []
   (fn []
     [re-com/v-box
      :height "100%"
      :children [
                 [re-com/box :child [title]] 
+                [re-com/box :child [refresh_button]] 
                 [re-com/box :child [undo-button]] 
                 [re-com/h-box  :children [
                                           [re-com/gap :size "15px"]

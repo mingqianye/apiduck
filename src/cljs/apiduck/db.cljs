@@ -93,6 +93,7 @@
 
 (def default-db
   {
+    :loading false
     :clicked-msg "no click yet"
     :api-name "name of the api"
     :http-request-type "Post"

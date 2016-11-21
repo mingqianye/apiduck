@@ -1,5 +1,7 @@
 (ns apiduck.events
-    (:require [re-frame.core :as re-frame]
+    (:require [day8.re-frame.http-fx] 
+              [re-frame.core :as re-frame]
+              [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :as db]
               [apiduck.utils :refer [change-block-type change-block drop-block add-block collapse-block]]))
@@ -52,6 +54,25 @@
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
- (fn  [db [_ schema-type block-id value]]
+ (fn       [db [_ schema-type block-id value]]
    (let [new-schema (collapse-block (get db schema-type) block-id value)]
     (assoc db schema-type new-schema))))
+
+(re-frame/reg-event-fx                    ;; note the trailing -fx
+  :handler-with-http                      ;; usage:  (dispatch [:handler-with-http])
+  (fn [{:keys [db]} _]                    ;; the first param will be "world"
+    {:db   (assoc db :loading true)   ;; causes the twirly-waiting-dialog to show??
+     :http-xhrio {:method          :get
+                  :uri             "http://localhost:3449/hello"
+                  :timeout         8000                                           ;; optional see API docs
+                  :response-format (ajax/json-response-format {:keywords? true})  ;; IMPORTANT!: You must provide this.
+                  :on-success      [:good-http-result]
+                  :on-failure      [:bad-http-result]}}))
+
+(re-frame/reg-event-db
+  :good-http-result
+  (fn [db [_ content]]
+    (println (str "good result!" content))
+    db))
+
+
