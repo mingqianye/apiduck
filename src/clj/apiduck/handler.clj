@@ -9,7 +9,7 @@
 (defroutes routes
   (GET "/" [] (resource-response "index.html" {:root "public"}))
   (GET "/default_template" [] (fn [req] {:body template :status 200}) )
-  (route/not-found (response {:message "Page not found!!!!"}))
+  ;(route/not-found (response {:message "Page not found!!!!"}))
   (resources "/"))
 
 (def dev-handler (-> routes 

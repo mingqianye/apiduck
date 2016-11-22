@@ -11,7 +11,8 @@
   }])
 
 (def app-config
-  {:host "http://pppproduction:3449"})
+  ;TODO change me to production ip
+  {:host "http://localhost:3449"})
 
 
 (def default-db
