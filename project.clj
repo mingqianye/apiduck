@@ -8,6 +8,7 @@
                  [day8.re-frame/http-fx "0.1.2"]
                  [re-com "1.0.0"]
                  [ring/ring-json "0.4.0"]
+                 [bk/ring-gzip "0.1.1"]
                  [garden "1.3.2"]
                  [ns-tracker "0.3.0"]
                  [compojure "1.5.0"]

@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [GET defroutes]]
             [compojure.route :as route :refer [resources]]
             [ring.util.response :refer [response resource-response]]
+            [ring.middleware.gzip :refer [wrap-gzip]]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.middleware.reload :refer [wrap-reload]]
             [apiduck.default-template :refer [template]]))
@@ -17,4 +18,5 @@
                      wrap-json-response))
 
 (def handler (-> routes 
-                 wrap-json-response))
+                 wrap-json-response
+                 wrap-gzip))
