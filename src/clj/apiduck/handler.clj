@@ -7,11 +7,18 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [apiduck.default-template :refer [template]]))
 
+;TODO change me to a shorter uuid
+(defn uuid [] (.toString (java.util.UUID/randomUUID)))
+
 (defroutes routes
-  (GET "/" [] (resource-response "index.html" {:root "public"}))
-  (GET "/default_template" [] (fn [req] {:body template :status 200}) )
-  ;(route/not-found (response {:message "Page not found!!!!"}))
-  (resources "/"))
+  (GET "/" [] (response {:message "Visit /new_project"}))
+  (GET "/new_project" [] (ring.util.response/redirect (str "/project#" (uuid))))
+  (GET "/project" [] (resource-response "project.html" {:root "public"}))
+  (GET "/api/load_project/:project-id" [] (fn [req] {:body template :status 200}) )
+  ;(route/not-found (resource-response "index.html" {:root "public"}))
+  (route/not-found (response {:message "Page not found!!!!"}))
+  ;(resources "/")
+  )
 
 (def dev-handler (-> routes 
                      wrap-reload 

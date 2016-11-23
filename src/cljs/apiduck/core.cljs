@@ -4,6 +4,7 @@
               [apiduck.events]
               [apiduck.subs]
               [apiduck.views :as views]
+              [apiduck.routes :as routes]
               [apiduck.config :as config]))
 
 
@@ -20,6 +21,7 @@
 (defn ^:export init []
   (re-frame/dispatch-sync [:initialize-db])
   (dev-setup)
-  (re-frame/dispatch [:load-template "default"])
+  (routes/app-routes)
+  (re-frame/dispatch [:load-template])
   (mount-root)
   )

@@ -12,6 +12,7 @@
                  [garden "1.3.2"]
                  [ns-tracker "0.3.0"]
                  [compojure "1.5.0"]
+                 [secretary "1.2.3"]
                  [yogthos/config "0.8"]
                  [ring "1.4.0"]]
 

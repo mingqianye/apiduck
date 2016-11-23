@@ -17,6 +17,11 @@
    (assoc db :clicked-msg msg)))
 
 (re-frame/reg-event-db
+  :change-project-name
+  (fn [db [_ new-name]]
+    (assoc db :project-id new-name)))
+
+(re-frame/reg-event-db
   :change-doc
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
@@ -86,7 +91,8 @@
   (fn [{:keys [db]} _]                    ;; the first param will be "world"
     {:db   (assoc db :loading true)   ;; causes the twirly-waiting-dialog to show??
      :http-xhrio {:method          :get
-                  :uri             (str (get-in db [:app-config :host]) "/default_template")
+                  :uri             (str (get-in db [:app-config :host]) 
+                                        (str "/api/load_project/" (:project-id db)))
                   :timeout         8000                                           ;; optional see API docs
                   :response-format (ajax/json-response-format {:keywords? true})  ;; IMPORTANT!: You must provide this.
                   :on-success      [:initialize-template]
@@ -98,3 +104,4 @@
   (fn [db [_ docs]]
     (let [new-docs (cook-docs (:docs docs))]
       (assoc db :docs new-docs))))
+

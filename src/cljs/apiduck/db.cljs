@@ -21,5 +21,6 @@
     :loading false
     :clicked-msg "no click yet"
     :current-doc-index 0
+    :project-id ""
     :docs default-docs
   })
