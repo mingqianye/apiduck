@@ -39,9 +39,9 @@
 
 (def template
     {:docs [{
-      :api-name "name of the api"
+      :endpoint-name "name of the api"
       :http-request-type "Post"
-      :api-description "description of the api"
+      :endpoint-description "description of the api"
       :request-type "post"
       :request-schema default-schema
       :response-schema default-schema

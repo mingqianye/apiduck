@@ -68,3 +68,11 @@ docker-compose up
 ```
 
 Open browser and go to http://ip:3000
+
+
+
+
+## Introduction
+
+1. Entity relations:
+User --has many--> projects --has many--> modules --has many --> endpoints

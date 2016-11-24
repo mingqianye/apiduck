@@ -6,11 +6,11 @@
   (get (:docs db) (:current-doc-index db)))
 
 (re-frame/reg-sub
- :api-name
+ :endpoint-name
  (fn [db]
    (-> db
        current-doc
-       :api-name)))
+       :endpoint-name)))
 
 (re-frame/reg-sub
  :http-request-type
@@ -20,11 +20,11 @@
        :http-request-type)))
 
 (re-frame/reg-sub
- :api-description
+ :endpoint-description
  (fn [db]
    (-> db
        current-doc
-       :api-description)))
+       :endpoint-description)))
 
 (re-frame/reg-sub
  :whole-db

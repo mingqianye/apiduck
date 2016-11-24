@@ -2,9 +2,9 @@
 
 (def default-docs
   [{
-   :api-name "Loading..."
+   :endpoint-name "Loading..."
    :http-request-type "Loading..."
-   :api-description "Loading..."
+   :endpoint-description "Loading..."
    :request-type "Post"
    :request-schema {}
    :response-schema {}

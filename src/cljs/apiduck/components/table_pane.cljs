@@ -9,12 +9,12 @@
             [apiduck.components.choices :refer [http-request-choices]]
             [apiduck.components.duck-table :refer [table]]))
 
-(defn api-name []
-  (let [api-name (re-frame/subscribe [:api-name])]
+(defn endpoint-name []
+  (let [endpoint-name (re-frame/subscribe [:endpoint-name])]
     (fn []
       [editable-text
-       :value @api-name
-       :on-save #(dispatch [:change-doc :api-name %])])))
+       :value @endpoint-name
+       :on-save #(dispatch [:change-doc :endpoint-name %])])))
 
 (defn http-requests-type []
   (let [request-type (re-frame/subscribe [:http-request-type])]
@@ -26,26 +26,26 @@
        ]
       )))
 
-(defn api-description []
-  (let [description (re-frame/subscribe [:api-description])]
+(defn endpoint-description []
+  (let [description (re-frame/subscribe [:endpoint-description])]
     (fn []
       [:div {:style {:white-space "pre-wrap"}}
         [editable-text 
          :value @description
          :use-textarea true
-         :on-save #(dispatch [:change-doc :api-description %])]
+         :on-save #(dispatch [:change-doc :endpoint-description %])]
       ])))
 
 
 (defn table-pane
   []
   [:div
-    [:div [label :label "Name"]]
-    [api-name]
+    [:div [label :label "endpoint name"]]
+    [endpoint-name]
     [:div [label :label "Http Request Type"]]
     [http-requests-type]
-    [:div [label :label "API description"]]
-    [api-description]
+    [:div [label :label "endpoint description"]]
+    [endpoint-description]
 
     [:hr]
     [label :label "Request"]
