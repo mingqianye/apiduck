@@ -4,7 +4,7 @@
               [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :refer [default-db]]
-              [apiduck.utils :refer [cook-docs change-block-type change-block drop-block add-block collapse-block]]))
+              [apiduck.utils :refer [cook-endpoints change-block-type change-block drop-block add-block collapse-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -25,42 +25,42 @@
   :change-doc
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
-    (assoc-in db [:docs (:current-doc-index db) attr] new-value)))
+    (assoc-in db [:endpoints (:current-doc-index db) attr] new-value)))
 
 (re-frame/reg-event-db
  :change-attr-value
  (undoable "changing attr value")
  (fn  [db [_ schema-type block-id attr new-value]]
    (let [f #(change-block % block-id attr new-value)]
-    (update-in db [:docs (:current-doc-index db) schema-type] f))))
+    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :change-variable-type
  (undoable "changing variable type")
  (fn  [db [_ schema-type block-id new-type]]
    (let [f #(change-block-type % block-id new-type)]
-    (update-in db [:docs (:current-doc-index db) schema-type] f))))
+    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :drop-row
  (undoable "drop row")
  (fn  [db [_ schema-type block-id]]
    (let [f #(drop-block % block-id)]
-    (update-in db [:docs (:current-doc-index db) schema-type] f))))
+    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :add-row
  (undoable "add row")
  (fn  [db [_ schema-type block-id]]
    (let [f #(add-block % block-id)]
-    (update-in db [:docs (:current-doc-index db) schema-type] f))))
+    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
  (fn [db [_ schema-type block-id value]]
    (let [f #(collapse-block % block-id value)]
-    (update-in db [:docs (:current-doc-index db) schema-type] f))))
+    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
 
 (re-frame/reg-event-db
  :inject-dev-env
@@ -101,7 +101,7 @@
 
 (re-frame/reg-event-db
   :initialize-template
-  (fn [db [_ docs]]
-    (let [new-docs (cook-docs (:docs docs))]
-      (assoc db :docs new-docs))))
+  (fn [db [_ endpoints]]
+    (let [new-endpoints (cook-endpoints (:endpoints endpoints))]
+      (assoc db :endpoints new-endpoints))))
 

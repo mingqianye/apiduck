@@ -3,7 +3,7 @@
     (:require [re-frame.core :as re-frame]))
 
 (defn- current-doc [db]
-  (get (:docs db) (:current-doc-index db)))
+  (get (:endpoints db) (:current-doc-index db)))
 
 (re-frame/reg-sub
  :endpoint-name

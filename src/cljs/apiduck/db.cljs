@@ -1,6 +1,6 @@
 (ns apiduck.db)
 
-(def default-docs
+(def default-endpoints
   [{
    :endpoint-name "Loading..."
    :http-request-type "Loading..."
@@ -22,5 +22,5 @@
     :clicked-msg "no click yet"
     :current-doc-index 0
     :project-id ""
-    :docs default-docs
+    :endpoints default-endpoints
   })

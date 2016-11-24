@@ -38,7 +38,7 @@
                :type "string"}]}]}]})
 
 (def template
-    {:docs [{
+    {:endpoints [{
       :endpoint-name "name of the api"
       :http-request-type "Post"
       :endpoint-description "description of the api"
