@@ -41,7 +41,7 @@
 
 (re-frame/reg-event-db
  :change-row-attr-value
- (undoable "changing attr value")
+ (undoable "changing row attr value")
  (fn  [db [_ schema-type block-id attr new-value]]
    (change-request-response
      :db                  db
@@ -50,7 +50,7 @@
 
 (re-frame/reg-event-db
  :change-row-variable-type
- (undoable "changing variable type")
+ (undoable "changing row variable type")
  (fn  [db [_ schema-type block-id new-type]]
    (change-request-response
      :db                  db
