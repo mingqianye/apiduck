@@ -59,19 +59,19 @@
         [:span indent] 
         [editable-text 
          :value variable 
-         :on-save #(dispatch [:change-attr-value schema-type block-id :variable %])]] 
+         :on-save #(dispatch [:change-row-attr-value schema-type block-id :variable %])]] 
        [:td {:style {:background-color color}} 
         [editable-text 
          :value title
-         :on-save #(dispatch [:change-attr-value schema-type block-id :title %])]] 
+         :on-save #(dispatch [:change-row-attr-value schema-type block-id :title %])]] 
        [:td {:style {:background-color color}} 
         [popover-radios
          :value variable-type
          :choices variable-type-choices
-         :on-change #(dispatch [:change-variable-type schema-type block-id %])
+         :on-change #(dispatch [:change-row-variable-type schema-type block-id %])
          ]] 
        [:td {:style {:background-color color}} 
         [editable-text 
          :value description
-         :on-save #(dispatch [:change-attr-value schema-type block-id :description %])]] 
+         :on-save #(dispatch [:change-row-attr-value schema-type block-id :description %])]] 
        ]))))

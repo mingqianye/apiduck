@@ -25,7 +25,7 @@
     (println "/about"))
 
   (defroute "/:id" {:as params}
-    (re-frame/dispatch [:change-project-name (:id params)]))
+    (re-frame/dispatch [:change-project :project-name (:id params)]))
 
   ;; --------------------
   (hook-browser-navigation!))

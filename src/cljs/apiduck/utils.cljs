@@ -52,8 +52,17 @@
     (into input-map {:collapsed value})
     (into input-map {:children (for [c (:children input-map)] (collapse-block c block-id value))})))
 
-(defn cook-endpoints [endpoints]
-  (let [f (fn [endpoint] (-> endpoint
-                             (update :request-schema inject-meta)
-                             (update :response-schema inject-meta)))]
-    (vec (map f endpoints))))
+
+(defn cook-project [project]
+  (let [cook-endpoint (fn [endpoint] (-> endpoint
+                                         (update :request-schema inject-meta)
+                                         (update :response-schema inject-meta)))
+        cook-module (fn [module] (-> module 
+                                     (update :endpoints #(vec (map cook-endpoint %)))))]
+    (-> project
+        (update :modules #(vec (map cook-module %))))))
+
+(defn current-endpoint [db]
+  (let [module-index (:current-module-index db)
+        endpoint-index (:current-endpoint-index db)]
+    (get-in db [:project :modules module-index :endpoints endpoint-index])))

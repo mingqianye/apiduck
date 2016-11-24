@@ -37,8 +37,9 @@
                :description "SFDC code of the country"
                :type "string"}]}]}]})
 
-(def template
-    {:endpoints [{
+(def module
+    {:module-name "Sample module name"
+     :endpoints [{
       :endpoint-name "name of the api"
       :http-request-type "Post"
       :endpoint-description "description of the api"
@@ -46,3 +47,8 @@
       :request-schema default-schema
       :response-schema default-schema
     }]})
+
+(def project
+   {:project-name "Sample project name"
+    :modules [module] 
+   })

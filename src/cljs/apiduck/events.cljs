@@ -4,7 +4,7 @@
               [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :refer [default-db]]
-              [apiduck.utils :refer [cook-endpoints change-block-type change-block drop-block add-block collapse-block]]))
+              [apiduck.utils :refer [cook-project change-block-type change-block drop-block add-block collapse-block]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -17,50 +17,72 @@
    (assoc db :clicked-msg msg)))
 
 (re-frame/reg-event-db
-  :change-project-name
-  (fn [db [_ new-name]]
-    (assoc db :project-id new-name)))
+  :change-project
+  (fn [db [_ attr value]]
+    (assoc-in db [:project attr] value)))
 
 (re-frame/reg-event-db
-  :change-doc
+  :change-endpoint
   (undoable "changing doc attr value")
   (fn  [db [_ attr new-value]]
-    (assoc-in db [:endpoints (:current-doc-index db) attr] new-value)))
+    (let [module-index (:current-module-index db)
+          endpoint-index (:current-endpoint-index db)]
+      (assoc-in db [:project :modules module-index :endpoints endpoint-index attr] new-value))))
+
+(defn- change-request-response [& {:keys [db request-or-response update-function]}]
+  (let [module-index (:current-module-index db)
+        endpoint-index (:current-endpoint-index db)]
+    (update-in db [:project 
+                   :modules 
+                   module-index 
+                   :endpoints 
+                   endpoint-index 
+                   request-or-response] update-function)))
 
 (re-frame/reg-event-db
- :change-attr-value
+ :change-row-attr-value
  (undoable "changing attr value")
  (fn  [db [_ schema-type block-id attr new-value]]
-   (let [f #(change-block % block-id attr new-value)]
-    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
+   (change-request-response
+     :db                  db
+     :request-or-response schema-type
+     :update-function     #(change-block % block-id attr new-value))))
 
 (re-frame/reg-event-db
- :change-variable-type
+ :change-row-variable-type
  (undoable "changing variable type")
  (fn  [db [_ schema-type block-id new-type]]
-   (let [f #(change-block-type % block-id new-type)]
-    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
+   (change-request-response
+     :db                  db
+     :request-or-response schema-type
+     :update-function     #(change-block-type % block-id new-type))))
 
 (re-frame/reg-event-db
  :drop-row
  (undoable "drop row")
  (fn  [db [_ schema-type block-id]]
-   (let [f #(drop-block % block-id)]
-    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
+   (change-request-response
+     :db                  db
+     :request-or-response schema-type
+     :update-function     #(drop-block % block-id))))
 
 (re-frame/reg-event-db
  :add-row
  (undoable "add row")
  (fn  [db [_ schema-type block-id]]
-   (let [f #(add-block % block-id)]
-    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
+   (change-request-response
+     :db                  db
+     :request-or-response schema-type
+     :update-function     #(add-block % block-id))))
 
 (re-frame/reg-event-db
  :collapse-row
  (undoable "collapse row")
  (fn [db [_ schema-type block-id value]]
-   (let [f #(collapse-block % block-id value)]
-    (update-in db [:endpoints (:current-doc-index db) schema-type] f))))
+   (change-request-response
+     :db                  db
+     :request-or-response schema-type
+     :update-function     #(collapse-block % block-id value))))
 
 (re-frame/reg-event-db
  :inject-dev-env
@@ -102,6 +124,5 @@
 (re-frame/reg-event-db
   :initialize-template
   (fn [db [_ endpoints]]
-    (let [new-endpoints (cook-endpoints (:endpoints endpoints))]
-      (assoc db :endpoints new-endpoints))))
+    (assoc db :project (cook-project endpoints))))
 

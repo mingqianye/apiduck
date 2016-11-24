@@ -14,7 +14,7 @@
     (fn []
       [editable-text
        :value @endpoint-name
-       :on-save #(dispatch [:change-doc :endpoint-name %])])))
+       :on-save #(dispatch [:change-endpoint :endpoint-name %])])))
 
 (defn http-requests-type []
   (let [request-type (re-frame/subscribe [:http-request-type])]
@@ -22,7 +22,7 @@
       [popover-radios
        :value @request-type
        :choices http-request-choices
-       :on-change #(dispatch [:change-doc :http-request-type %])
+       :on-change #(dispatch [:change-endpoint :http-request-type %])
        ]
       )))
 
@@ -33,7 +33,7 @@
         [editable-text 
          :value @description
          :use-textarea true
-         :on-save #(dispatch [:change-doc :endpoint-description %])]
+         :on-save #(dispatch [:change-endpoint :endpoint-description %])]
       ])))
 
 
