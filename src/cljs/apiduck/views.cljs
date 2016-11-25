@@ -2,7 +2,9 @@
     (:require [re-frame.core :as re-frame]
               [re-com.core :as re-com]
               [cljs.pprint :refer [pprint]]
-              [apiduck.components.table-pane :refer [table-pane]]))
+              [apiduck.components.left-side-nav-bar :refer [left-side-nav-pane]]
+              [apiduck.components.table-pane :refer [table-pane]]
+              ))
 
 (defn title []
   (let [name (re-frame/subscribe [:endpoint-name])]
@@ -49,7 +51,12 @@
                 [re-com/box :child [undo-button]] 
                 [re-com/line]
                 [re-com/box :child [re-com/h-split
-                                    :panel-1 [re-com/box :child "My Left Pane"]
+                                    :panel-1 [re-com/scroller
+                                                :v-scroll :auto
+                                                :h-scroll :off
+                                                :child [re-com/v-box 
+                                                        :size "1"
+                                                        :children [[left-side-nav-pane]]]]
                                     :panel-2 [re-com/box :child [table-pane]]
                                     :initial-split 20
                                     ]]
