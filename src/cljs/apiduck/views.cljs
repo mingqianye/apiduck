@@ -47,10 +47,10 @@
                 [re-com/box :child [title]] 
                 [re-com/box :child [refresh_button]] 
                 [re-com/box :child [undo-button]] 
-                [re-com/h-box  :children [
-                                          [re-com/gap :size "15px"]
-                                          [re-com/box :child "My Left Pane"]
-                                          [re-com/gap :size "15px"]
-                                          [re-com/box :child [table-pane]]
-                                         ]]
+                [re-com/line]
+                [re-com/box :child [re-com/h-split
+                                    :panel-1 [re-com/box :child "My Left Pane"]
+                                    :panel-2 [re-com/box :child [table-pane]]
+                                    :initial-split 20
+                                    ]]
                 [re-com/box :child [db-printout]]]]))
