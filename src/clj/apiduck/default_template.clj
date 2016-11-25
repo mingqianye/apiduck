@@ -50,5 +50,5 @@
 
 (def project
    {:project-name "Sample project name"
-    :modules [module] 
+    :modules [module module] 
    })

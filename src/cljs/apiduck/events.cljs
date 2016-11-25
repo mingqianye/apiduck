@@ -126,3 +126,9 @@
   (fn [db [_ endpoints]]
     (assoc db :project (cook-project endpoints))))
 
+(re-frame/reg-event-db
+  :change-current-endpoint-index
+  (fn [db [_ module-index endpoint-index]]
+    (println "changing to")
+    (assoc db :current-module-index module-index :current-endpoint-index endpoint-index)))
+
