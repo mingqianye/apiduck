@@ -60,6 +60,11 @@
   (let [schema (re-frame/subscribe [schema-type])]
     (fn []
       [:div
+        [md-icon-button
+          :md-icon-name    "zmdi zmdi-plus-square"
+          :class           "mdc-text-green"
+          :tooltip         "Add Property"
+          :on-click        #(dispatch [:add-row schema-type (:block-id @schema)])]
         (-> @schema
               sort-by-variable       ; sort children recursively
               transform-recursive    ; transform children recursively and flatten to array
@@ -67,9 +72,4 @@
               rest                   ; hide row 0
               to-data-rows           ; add React meta data, transform to <tr> elements
               data-table)            ; wrap <tr> elements in <table>
-        [md-icon-button
-          :md-icon-name    "zmdi zmdi-plus-square"
-          :class           "mdc-text-green"
-          :tooltip         "Add Property"
-          :on-click        #(dispatch [:add-row schema-type (:block-id @schema)])]]
-      )))
+        ])))
