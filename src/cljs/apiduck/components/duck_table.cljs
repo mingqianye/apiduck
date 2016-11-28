@@ -55,15 +55,15 @@
 
 (defn table
   [schema-type]
-  (let [schema (re-frame/subscribe [:current-endpoint schema-type])]
+  (let [root (re-frame/subscribe [:current-endpoint schema-type])]
     (fn []
       [:div
         [md-icon-button
           :md-icon-name    "zmdi zmdi-plus-square"
           :class           "mdc-text-green"
           :tooltip         "Add Property"
-          :on-click        #(dispatch [:add-row schema-type (:block-id @schema)])]
-        (-> @schema
+          :on-click        #(dispatch [:add-row schema-type (:block-id @root)])]
+        (-> @root
               sort-by-variable       ; sort children recursively
               transform-recursive    ; transform children recursively and flatten to array
               (add-id-and-schema-type schema-type); add row id 0,1,2...
