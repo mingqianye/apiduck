@@ -6,13 +6,15 @@
             ))
 
 (defn nav-item []
-  (let [mouse-over? (reagent/atom false)]
-    (fn [item current-module-index current-endpoint-index]
+  (let [mouse-over? (reagent/atom false)
+        current-module-index (re-frame/subscribe [:db :current-module-index])
+        current-endpoint-index (re-frame/subscribe [:db :current-endpoint-index])]
+    (fn [item]
       (let [module-index   (:module-index item)
             endpoint-index (:endpoint-index item)
             level          (:level item)
-            selected?      (and (= module-index current-module-index)
-                                (= endpoint-index current-endpoint-index))
+            selected?      (and (= module-index @current-module-index)
+                                (= endpoint-index @current-endpoint-index))
             is-major?      (= (:level item) :major)
             has-panel?     (:has-panel item)]
         [:div
@@ -34,21 +36,13 @@
          [:span (:label item)]]))))
 
 
-(defn generate-items [db]
-  (let [modules (get-in db [:project :modules])
-        enumerate (fn [coll] (map-indexed vector coll))]
-    (flatten (for [[index-m m] (enumerate modules)]
-      (cons {:level :major :label (:module-name m) :has-panel false}
-            (for [[index-e e] (enumerate (:endpoints m))]
-              {:module-index index-m :endpoint-index index-e :level :minor :label (:endpoint-name e) :has-panel true}))))))
 
 (defn left-side-nav-pane []
-  (let [db (re-frame/subscribe [:whole-db])]
+  (let [items (re-frame/subscribe [:left-nav-bar-items])]
     (fn []
-      (let [items (generate-items @db)]
       [v-box
        :class    "noselect"
        :style    {:background-color "#fcfcfc"}
        ;:size    "1"
-       :children (for [item items]
-                   [nav-item item (:current-module-index @db) (:current-endpoint-index @db) ])]))))
+       :children (for [item @items]
+                   [nav-item item])])))
