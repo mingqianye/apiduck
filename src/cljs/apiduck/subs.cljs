@@ -4,6 +4,11 @@
               [apiduck.utils :refer [current-endpoint]]))
 
 (re-frame/reg-sub
+ :whole-db
+ (fn [db [_ _]]
+   db))
+
+(re-frame/reg-sub
  :endpoint-name
  (fn [db]
    (-> db
@@ -24,10 +29,6 @@
        current-endpoint
        :endpoint-description)))
 
-(re-frame/reg-sub
- :whole-db
- (fn [db]
-   db))
 
 (re-frame/reg-sub
  :request-schema
