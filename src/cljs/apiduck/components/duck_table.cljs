@@ -44,12 +44,10 @@
   (let [inject (fn [index row] (into row {:id index :schema-type schema-type}))]
     (map-indexed inject rows)))
 
-(defn to-data-rows
-  [rows]
+(defn to-data-rows [rows]
   (for [r rows] ^{:key r} [data-row r]))
   
-(defn data-table
-  [rows]
+(defn data-table [rows]
   [:table {:class "table"}
     [:thead          
       [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]

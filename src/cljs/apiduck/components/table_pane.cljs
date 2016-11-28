@@ -52,4 +52,5 @@
     [table :request-schema]
     [:hr]
     [label :label "Response"]
-    [table :response-schema]])
+    [table :response-schema]
+    ])

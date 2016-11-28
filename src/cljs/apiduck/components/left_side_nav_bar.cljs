@@ -29,7 +29,8 @@
 
           :on-mouse-over (handler-fn (when has-panel? (reset! mouse-over? true)))
           :on-mouse-out  (handler-fn (reset! mouse-over? false))
-          :on-click      (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index]))}
+          :on-click      (if has-panel?
+                           (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index])))}
          [:span (:label item)]]))))
 
 
