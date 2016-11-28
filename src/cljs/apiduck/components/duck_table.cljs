@@ -55,7 +55,7 @@
 
 (defn table
   [schema-type]
-  (let [schema (re-frame/subscribe [schema-type])]
+  (let [schema (re-frame/subscribe [:current-endpoint schema-type])]
     (fn []
       [:div
         [md-icon-button

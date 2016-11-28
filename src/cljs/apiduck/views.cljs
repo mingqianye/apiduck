@@ -7,7 +7,7 @@
               ))
 
 (defn title []
-  (let [name (re-frame/subscribe [:endpoint-name])]
+  (let [name (re-frame/subscribe [:current-endpoint :endpoint-name])]
     (fn []
       [re-com/title
        :label (str "Hello from " @name)

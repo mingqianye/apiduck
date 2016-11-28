@@ -9,37 +9,8 @@
    db))
 
 (re-frame/reg-sub
- :endpoint-name
- (fn [db]
+ :current-endpoint
+ (fn [db [_ attr-name]]
    (-> db
        current-endpoint
-       :endpoint-name)))
-
-(re-frame/reg-sub
- :http-request-type
- (fn [db]
-   (-> db
-       current-endpoint
-       :http-request-type)))
-
-(re-frame/reg-sub
- :endpoint-description
- (fn [db]
-   (-> db
-       current-endpoint
-       :endpoint-description)))
-
-
-(re-frame/reg-sub
- :request-schema
- (fn [db]
-   (-> db
-       current-endpoint
-       :request-schema)))
-
-(re-frame/reg-sub
- :response-schema
- (fn [db]
-   (-> db
-       current-endpoint
-       :response-schema)))
+       attr-name)))

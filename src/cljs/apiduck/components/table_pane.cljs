@@ -10,14 +10,14 @@
             [apiduck.components.duck-table :refer [table]]))
 
 (defn endpoint-name []
-  (let [endpoint-name (re-frame/subscribe [:endpoint-name])]
+  (let [endpoint-name (re-frame/subscribe [:current-endpoint :endpoint-name])]
     (fn []
       [editable-text
        :value @endpoint-name
        :on-save #(dispatch [:change-endpoint :endpoint-name %])])))
 
 (defn http-requests-type []
-  (let [request-type (re-frame/subscribe [:http-request-type])]
+  (let [request-type (re-frame/subscribe [:current-endpoint :http-request-type])]
     (fn []
       [popover-radios
        :value @request-type
@@ -27,7 +27,7 @@
       )))
 
 (defn endpoint-description []
-  (let [description (re-frame/subscribe [:endpoint-description])]
+  (let [description (re-frame/subscribe [:current-endpoint :endpoint-description])]
     (fn []
       [:div {:style {:white-space "pre-wrap"}}
         [editable-text 
