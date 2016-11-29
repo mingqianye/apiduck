@@ -6,13 +6,6 @@
             [apiduck.components.duck-row :refer [data-row]]
             [apiduck.components.colors   :refer [colors]]))
 
-(defn sort-by-variable
-  [input-map]
-  (let [children     (:children input-map)
-        sorted       (sort-by :variable children)
-        new-children (map sort-by-variable sorted)]
-    (into input-map {:children new-children})))
-
 (defn transform-shallow
   [schema level visible]
   (let [gap "\u00A0\u00A0\u00A0"]
@@ -35,7 +28,7 @@
   ([schema level visible]
    (let [cur           (transform-shallow schema level visible)
          child-visible (and visible (not (:collapsed schema)))
-         children      (for [v (:children schema)] 
+         children      (for [v (sort-by :variable (:children schema))] ; sort children first
                          (transform-recursive v (inc level) child-visible))]
      (cons cur (flatten children)))))
 
@@ -64,7 +57,6 @@
           :tooltip         "Add Property"
           :on-click        #(dispatch [:add-row schema-type (:block-id @root)])]
         (-> @root
-              sort-by-variable       ; sort children recursively
               transform-recursive    ; transform children recursively and flatten to array
               (add-id-and-schema-type schema-type); add row id 0,1,2...
               rest                   ; hide row 0
