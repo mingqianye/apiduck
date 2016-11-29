@@ -31,18 +31,20 @@
                           :background-color (if (or selected?  @mouse-over?) "#eaeaea")}
 
           :on-mouse-over (handler-fn (when is-endpoint? (reset! mouse-over? true)))
-          :on-mouse-out  (handler-fn (reset! mouse-over? false))}
+          :on-mouse-out  (handler-fn (reset! mouse-over? false))
+          :on-click      (if is-endpoint?
+                             (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index]))) }
          [label
           :label     text-label
-          :on-click  (if is-endpoint?
-                         (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index])))]
+          ]
          [md-icon-button
           :md-icon-name    "zmdi zmdi-delete"
           :class           "mdc-text-red"
           :size            :smaller
           :style           (if (not @mouse-over?) {:display "none"})
           :tooltip         "Delete Endpoint"
-          :on-click        #(re-frame/dispatch [:drop-endpoint module-index endpoint-index])
+          :on-click        #(do (re-frame/dispatch [:drop-endpoint module-index endpoint-index]) 
+                                (.stopPropagation %))
           ]
          ]))))
 
