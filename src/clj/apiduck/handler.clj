@@ -16,8 +16,8 @@
   (GET "/project" [] (resource-response "project.html" {:root "public"}))
   (GET "/api/load_project/:project-id" [] (fn [req] {:body template/project :status 200}) )
   ;(route/not-found (resource-response "index.html" {:root "public"}))
+  (resources "/")
   (route/not-found (response {:message "Page not found!!!!"}))
-  ;(resources "/")
   )
 
 (def dev-handler (-> routes 
