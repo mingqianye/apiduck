@@ -108,9 +108,9 @@
     db))
 
 
-(re-frame/reg-event-fx                    ;; note the trailing -fx
+(re-frame/reg-event-fx                ;; note the trailing -fx
   :load-template                      ;; usage:  (dispatch [:handler-with-http])
-  (fn [{:keys [db]} _]                    ;; the first param will be "world"
+  (fn [{:keys [db]} _]                ;; the first param will be "world"
     {:db   (assoc db :loading true)   ;; causes the twirly-waiting-dialog to show??
      :http-xhrio {:method          :get
                   :uri             (str (get-in db [:app-config :host]) 
