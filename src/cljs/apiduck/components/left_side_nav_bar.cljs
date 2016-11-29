@@ -1,5 +1,5 @@
 (ns apiduck.components.left-side-nav-bar
-  (:require [re-com.core :refer [v-box]
+  (:require [re-com.core :refer [label v-box md-icon-button]
                          :refer-macros [handler-fn]]
             [re-frame.core :as re-frame]
             [reagent.core :as reagent]
@@ -10,13 +10,14 @@
         current-module-index (re-frame/subscribe [:db :current-module-index])
         current-endpoint-index (re-frame/subscribe [:db :current-endpoint-index])]
     (fn [item]
-      (let [module-index   (:module-index item)
+      (let [text-label     (:label item)
+            module-index   (:module-index item)
             endpoint-index (:endpoint-index item)
             level          (:level item)
             selected?      (and (= module-index @current-module-index)
                                 (= endpoint-index @current-endpoint-index))
             is-major?      (= (:level item) :major)
-            has-panel?     (:has-panel item)]
+            is-endpoint?   (:is-endpoint item)]
         [:div
          {:style         {:white-space      "nowrap"
                           :line-height      "1.3em"
@@ -25,15 +26,25 @@
                           :font-size        (when is-major? "15px")
                           :font-weight      (when is-major? "bold")
                           :border-right     (when selected? "4px #d0d0d0 solid")
-                          :cursor           (if has-panel? "pointer" "default")
-                          :color            (if has-panel? (when selected? "#111") "#888")
+                          :cursor           (if is-endpoint? "pointer" "default")
+                          :color            (if is-endpoint? (when selected? "#111") "#888")
                           :background-color (if (or selected?  @mouse-over?) "#eaeaea")}
 
-          :on-mouse-over (handler-fn (when has-panel? (reset! mouse-over? true)))
-          :on-mouse-out  (handler-fn (reset! mouse-over? false))
-          :on-click      (if has-panel?
-                           (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index])))}
-         [:span (:label item)]]))))
+          :on-mouse-over (handler-fn (when is-endpoint? (reset! mouse-over? true)))
+          :on-mouse-out  (handler-fn (reset! mouse-over? false))}
+         [label
+          :label     text-label
+          :on-click  (if is-endpoint?
+                         (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index])))]
+         [md-icon-button
+          :md-icon-name    "zmdi zmdi-delete"
+          :class           "mdc-text-red"
+          :size            :smaller
+          :style           (if (not @mouse-over?) {:display "none"})
+          :tooltip         "Delete Endpoint"
+          :on-click        #(re-frame/dispatch [:drop-endpoint module-index endpoint-index])
+          ]
+         ]))))
 
 
 

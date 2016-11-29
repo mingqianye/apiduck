@@ -131,3 +131,11 @@
   (fn [db [_ module-index endpoint-index]]
     (assoc db :current-module-index module-index :current-endpoint-index endpoint-index)))
 
+(re-frame/reg-event-db
+  :drop-endpoint
+  (undoable "drop endpoint")
+  (fn [db [_ module-index endpoint-index]]
+    (let [remove-nth (fn [index coll] (concat 
+                                        (take index coll) 
+                                        (drop (inc index) coll)))]
+    (update-in db [:project :modules module-index :endpoints] #(remove-nth endpoint-index %)))))
