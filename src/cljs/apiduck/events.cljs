@@ -135,7 +135,15 @@
   :drop-endpoint
   (undoable "drop endpoint")
   (fn [db [_ module-index endpoint-index]]
-    (let [remove-nth (fn [index coll] (concat 
+    (let [is-current? (= [(:current-module-index db) (:current-endpoint-index db)] [module-index endpoint-index])
+          remove-nth (fn [index coll] (concat 
                                         (take index coll) 
                                         (drop (inc index) coll)))]
-    (update-in db [:project :modules module-index :endpoints] #(remove-nth endpoint-index %)))))
+      (println is-current?)
+      (-> (if is-current?
+            (assoc db :current-module-index 0 :current-endpoint-index 0)
+            db)
+          (update-in [:project :modules module-index :endpoints] #(remove-nth endpoint-index %))))))
+
+
+
