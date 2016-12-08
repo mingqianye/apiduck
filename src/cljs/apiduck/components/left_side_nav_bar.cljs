@@ -30,7 +30,7 @@
                           :color            (if is-endpoint? (when selected? "#111") "#888")
                           :background-color (if (or selected?  @mouse-over?) "#eaeaea")}
 
-          :on-mouse-over (handler-fn (when is-endpoint? (reset! mouse-over? true)))
+          :on-mouse-over (handler-fn (reset! mouse-over? true))
           :on-mouse-out  (handler-fn (reset! mouse-over? false))
           :on-click      (if is-endpoint?
                              (handler-fn (re-frame/dispatch [:change-current-endpoint-index module-index endpoint-index]))) }
@@ -43,7 +43,9 @@
           :size            :smaller
           :style           (if (not @mouse-over?) {:display "none"})
           :tooltip         "Delete Endpoint"
-          :on-click        #(do (re-frame/dispatch [:drop-endpoint module-index endpoint-index]) 
+          :on-click        #(do (if is-endpoint?
+                                  (re-frame/dispatch [:drop-endpoint module-index endpoint-index]) 
+                                  (re-frame/dispatch [:drop-module module-index]))
                                 (.stopPropagation %))
           ]
          ]))))

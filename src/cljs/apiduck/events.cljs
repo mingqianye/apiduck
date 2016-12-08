@@ -4,7 +4,7 @@
               [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :refer [default-db]]
-              [apiduck.utils :refer [cook-project change-block-type change-block drop-block add-block collapse-block]]))
+              [apiduck.utils :refer [cook-project change-block-type change-block drop-block add-block collapse-block remove-nth]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -135,15 +135,19 @@
   :drop-endpoint
   (undoable "drop endpoint")
   (fn [db [_ module-index endpoint-index]]
-    (let [is-current? (= [(:current-module-index db) (:current-endpoint-index db)] [module-index endpoint-index])
-          remove-nth (fn [index coll] (concat 
-                                        (take index coll) 
-                                        (drop (inc index) coll)))]
-      (println is-current?)
+    (let [is-current? (= [(:current-module-index db) (:current-endpoint-index db)] [module-index endpoint-index])]
       (-> (if is-current?
             (assoc db :current-module-index 0 :current-endpoint-index 0)
             db)
           (update-in [:project :modules module-index :endpoints] #(remove-nth endpoint-index %))))))
 
 
-
+(re-frame/reg-event-db
+  :drop-module
+  (undoable "drop module")
+  (fn [db [_ module-index]]
+    (let [is-current? (= (:current-module-index db) module-index)]
+      (-> (if is-current?
+            (assoc db :current-module-index 0 :current-endpoint-index 0)
+            db)
+          (update-in [:project :modules] #(remove-nth module-index %))))))

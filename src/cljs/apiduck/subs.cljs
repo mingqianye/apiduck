@@ -26,7 +26,7 @@
   (let [modules (get-in db [:project :modules])
         enumerate (fn [coll] (map-indexed vector coll))]
     (flatten (for [[index-m m] (enumerate modules)]
-      (cons {:level :major :label (:module-name m) :is-endpoint false}
+      (cons {:level :major :label (:module-name m) :module-index index-m :is-endpoint false}
             (for [[index-e e] (enumerate (:endpoints m))]
               {:module-index index-m :endpoint-index index-e :level :minor :label (:endpoint-name e) :is-endpoint true})))))))
 

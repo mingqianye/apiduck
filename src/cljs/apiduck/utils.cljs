@@ -66,3 +66,8 @@
   (let [module-index (:current-module-index db)
         endpoint-index (:current-endpoint-index db)]
     (get-in db [:project :modules module-index :endpoints endpoint-index])))
+
+(defn remove-nth [index coll]
+  (vec (concat
+          (take index coll)
+          (drop (inc index) coll))))
