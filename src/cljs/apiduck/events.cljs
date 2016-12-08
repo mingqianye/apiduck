@@ -4,7 +4,7 @@
               [ajax.core :as ajax]
               [day8.re-frame.undo :as undo :refer [undoable]]
               [apiduck.db :refer [default-db]]
-              [apiduck.utils :refer [cook-project change-block-type change-block drop-block add-block collapse-block remove-nth new-endpoint]]))
+              [apiduck.utils :refer [cook-project change-block-type change-block drop-block add-block collapse-block remove-nth new-endpoint new-module]]))
 
 (re-frame/reg-event-db
  :initialize-db
@@ -158,3 +158,10 @@
   (fn [db [_ module-index]]
       (-> db
           (update-in [:project :modules module-index :endpoints] #(conj % (new-endpoint))))))
+
+(re-frame/reg-event-db
+  :add-module
+  (undoable "add module")
+  (fn [db [_]]
+      (-> db
+          (update-in [:project :modules] #(conj % (new-module))))))

@@ -15,6 +15,11 @@
     :request-schema (new-child)
     :response-schema (new-child)})
 
+(defn new-module []
+  {:module-name "(undefined)"
+   :endpoints []}
+  )
+
 
 (defn inject-meta
   "recursively inject :block-id and :visible into a nested map"

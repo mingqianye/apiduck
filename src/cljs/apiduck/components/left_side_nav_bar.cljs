@@ -62,9 +62,16 @@
 (defn left-side-nav-pane []
   (let [items (re-frame/subscribe [:left-nav-bar-items])]
     (fn []
-      [v-box
-       :class    "noselect"
-       :style    {:background-color "#fcfcfc"}
-       ;:size    "1"
-       :children (for [item @items]
-                   [nav-item item])])))
+      [:div
+        [md-icon-button
+          :md-icon-name    "zmdi zmdi-plus-square"
+          :class           "mdc-text-green"
+          :tooltip         "Add Module"
+          :on-click        #(re-frame/dispatch [:add-module])]
+        [v-box
+         :class    "noselect"
+         :style    {:background-color "#fcfcfc"}
+         ;:size    "1"
+         :children (for [item @items]
+                     [nav-item item])]
+        ])))
