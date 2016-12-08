@@ -8,6 +8,13 @@
    :collapsed   false
    :block-id    (str (random-uuid))})
 
+(defn new-endpoint []
+  { :endpoint-name "(undefined)"
+    :http-request-type "GET"
+    :endpoint-description "(undefined)"
+    :request-schema (new-child)
+    :response-schema (new-child)})
+
 
 (defn inject-meta
   "recursively inject :block-id and :visible into a nested map"

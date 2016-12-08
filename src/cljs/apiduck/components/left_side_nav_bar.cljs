@@ -36,6 +36,15 @@
           :label     text-label
           ]
          [md-icon-button
+          :md-icon-name    "zmdi zmdi-plus"
+          :class           "mdc-text-green"
+          :size            :smaller
+          :style           (if (or is-endpoint? (not @mouse-over?)) {:display "none"})
+          :tooltip         "Add Endpoint"
+          :on-click        #(do (re-frame/dispatch [:add-endpoint module-index]) 
+                                (.stopPropagation %))
+          ]
+         [md-icon-button
           :md-icon-name    "zmdi zmdi-delete"
           :class           "mdc-text-red"
           :size            :smaller

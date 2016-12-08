@@ -8,11 +8,13 @@
         :endpoint-name "Loading Enpoint Name..."
         :http-request-type "Loading..."
         :endpoint-description "Loading..."
-        :request-type "Post"
         :request-schema {}
         :response-schema {}}]
       }]
     }
+  )
+
+(def default-endpoint
   )
 
 (def app-config

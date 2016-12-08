@@ -43,7 +43,6 @@
       :endpoint-name "name of the api"
       :http-request-type "Post"
       :endpoint-description "description of the api"
-      :request-type "post"
       :request-schema default-schema
       :response-schema default-schema
     }]})
