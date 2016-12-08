@@ -13,18 +13,16 @@
       (let [text-label     (:label item)
             module-index   (:module-index item)
             endpoint-index (:endpoint-index item)
-            level          (:level item)
             selected?      (and (= module-index @current-module-index)
                                 (= endpoint-index @current-endpoint-index))
-            is-major?      (= (:level item) :major)
             is-endpoint?   (:is-endpoint item)]
         [:div
          {:style         {:white-space      "nowrap"
                           :line-height      "1.3em"
-                          :padding-left     (if is-major? "24px" "32px")
-                          :padding-top      (when is-major? "6px")
-                          :font-size        (when is-major? "15px")
-                          :font-weight      (when is-major? "bold")
+                          :padding-left     (if-not is-endpoint? "24px" "32px")
+                          :padding-top      (if-not is-endpoint? "6px")
+                          :font-size        (if-not is-endpoint? "15px")
+                          :font-weight      (if-not is-endpoint? "bold")
                           :border-right     (when selected? "4px #d0d0d0 solid")
                           :cursor           (if is-endpoint? "pointer" "default")
                           :color            (if is-endpoint? (when selected? "#111") "#888")
