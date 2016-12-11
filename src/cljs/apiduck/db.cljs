@@ -19,7 +19,7 @@
 
 (def app-config
   ;TODO change me to production ip
-  {:host "http://localhost:3449"})
+  {:host "http://spicyfox.com:3000"})
 
 
 (def default-db
