@@ -14,9 +14,6 @@
     }
   )
 
-(def default-endpoint
-  )
-
 (def app-config
   ;TODO change me to production ip
   {:host "http://spicyfox.com:3000"})
@@ -26,9 +23,10 @@
   {
     :app-config app-config
     :loading false
-    :clicked-msg "no click yet"
+    :clicked-msg "no click yet1"
     :current-module-index 0
     :current-endpoint-index 0
+    :in-edit-mode true
     :project-id "default_project_id"
     :project default-project
   })

@@ -17,6 +17,11 @@
    (assoc db :clicked-msg msg)))
 
 (re-frame/reg-event-db
+ :toggle-edit-mode
+ (fn  [db [_]]
+   (update db :in-edit-mode not)))
+
+(re-frame/reg-event-db
   :change-project
   (fn [db [_ attr value]]
     (assoc-in db [:project attr] value)))

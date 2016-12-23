@@ -41,6 +41,13 @@
    :on-click #(do (println "refreshing!") (re-frame/dispatch [:change-click-msg "clicked"]))]
   )
 
+(defn toggle-edit-mode-btn []
+  [re-com/hyperlink
+   :label "toggle edit-mode"
+   ;:on-click #(do (println "refreshing!") (re-frame/dispatch [:handler-with-http]))]
+   :on-click #(do (println "refreshing!") (re-frame/dispatch [:toggle-edit-mode]))]
+  )
+
 (defn main-panel []
   (fn []
     [re-com/v-box
@@ -48,6 +55,7 @@
      :children [
                 [re-com/box :child [title]] 
                 [re-com/box :child [refresh_button]] 
+                [re-com/box :child [toggle-edit-mode-btn]] 
                 [re-com/box :child [undo-button]] 
                 [re-com/line]
                 [re-com/box :child [re-com/h-split
