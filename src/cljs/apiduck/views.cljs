@@ -45,7 +45,7 @@
   [re-com/hyperlink
    :label "toggle edit-mode"
    ;:on-click #(do (println "refreshing!") (re-frame/dispatch [:handler-with-http]))]
-   :on-click #(do (println "refreshing!") (re-frame/dispatch [:toggle-edit-mode]))]
+   :on-click #(re-frame/dispatch [:toggle-edit-mode])]
   )
 
 (defn main-panel []

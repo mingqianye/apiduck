@@ -2,7 +2,7 @@
   (:require [re-com.core :refer [radio-button hyperlink row-button md-icon-button input-text single-dropdown]
                          :refer-macros [handler-fn]]
             [reagent.core  :as    reagent]
-            [re-frame.core :refer [dispatch]]
+            [re-frame.core :refer [dispatch subscribe]]
             [apiduck.components.choices :refer [variable-type-choices]]
             [apiduck.components.editable :refer [editable-text]]
             [apiduck.components.popover-radios :refer [popover-radios]]
@@ -23,7 +23,9 @@
                  expandable
                  schema-type] } row]
   (fn []
-    (let [mouse-over-row? @mouse-over]
+    (let [mouse-over-row? @mouse-over
+          in-edit-mode? @(subscribe [:in-edit-mode])]
+      (println in-edit-mode?)
       [:tr {:style {:display (if (not= visible true) "none")}}
        [:td 
          [md-icon-button
@@ -36,7 +38,8 @@
         ]
        [:td (:id row)]
        [:td 
-        {:style         {:background-color "#F7F7F7"}
+        {:style {:background-color "#F7F7F7"
+                 :display          (if (= in-edit-mode? false) "none")}
          :on-mouse-over (handler-fn (reset! mouse-over true))
          :on-mouse-out  (handler-fn (reset! mouse-over false))}
          [md-icon-button

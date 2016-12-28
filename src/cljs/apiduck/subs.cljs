@@ -14,6 +14,11 @@
     (attr-name db)))
 
 (re-frame/reg-sub
+ :in-edit-mode
+ (fn [db [_ _]]
+   (:in-edit-mode db)))
+
+(re-frame/reg-sub
  :current-endpoint
  (fn [db [_ attr-name]]
    (-> db

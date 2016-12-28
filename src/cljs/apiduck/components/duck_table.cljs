@@ -39,11 +39,19 @@
 
 (defn to-data-rows [rows]
   (for [r rows] ^{:key r} [data-row r]))
+
+(defn head []
+   (fn []
+    [:thead          
+     (println "asdf")
+      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]))
   
 (defn data-table [rows]
   [:table {:class "table"}
     [:thead          
-      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
+     (println "asdf")
+      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]
+     ]
     [:tbody rows ]])
 
 (defn table
