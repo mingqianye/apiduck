@@ -22,10 +22,8 @@
                  collapsed     
                  expandable
                  schema-type] } row]
-  (fn []
     (let [mouse-over-row? @mouse-over
           in-edit-mode? @(subscribe [:in-edit-mode])]
-      (println in-edit-mode?)
       [:tr {:style {:display (if (not= visible true) "none")}}
        [:td 
          [md-icon-button
@@ -77,4 +75,4 @@
         [editable-text 
          :value description
          :on-save #(dispatch [:change-row-attr-value schema-type block-id :description %])]] 
-       ]))))
+       ])))

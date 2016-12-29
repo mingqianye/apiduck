@@ -37,14 +37,12 @@
 (defn refresh_button []
   [re-com/hyperlink
    :label "refresh page"
-   ;:on-click #(do (println "refreshing!") (re-frame/dispatch [:handler-with-http]))]
    :on-click #(do (println "refreshing!") (re-frame/dispatch [:change-click-msg "clicked"]))]
   )
 
 (defn toggle-edit-mode-btn []
   [re-com/hyperlink
    :label "toggle edit-mode"
-   ;:on-click #(do (println "refreshing!") (re-frame/dispatch [:handler-with-http]))]
    :on-click #(re-frame/dispatch [:toggle-edit-mode])]
   )
 

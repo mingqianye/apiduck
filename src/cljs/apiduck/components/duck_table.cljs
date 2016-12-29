@@ -40,19 +40,35 @@
 (defn to-data-rows [rows]
   (for [r rows] ^{:key r} [data-row r]))
 
-(defn head []
-   (fn []
-    [:thead          
-     (println "asdf")
-      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]))
-  
+
 (defn data-table [rows]
+  (println "data-table")
   [:table {:class "table"}
-    [:thead          
-     (println "asdf")
-      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]
-     ]
+    [:thead 
+      [:tr [:th] [:th "#"] [:th "Actions"] [:th "Variable"] [:th "Title"] [:th "Type"] [:th "Description"]]]
     [:tbody rows ]])
+
+(defn build-rows [root schema-type]
+  (-> root
+    transform-recursive    ; transform children recursively and flatten to array
+    (add-id-and-schema-type schema-type); add row id 0,1,2...
+    rest                   ; hide row 0 (the root)
+    to-data-rows           ; add React meta data, transform to <tr> elements
+  ))
+
+(defn build-head []
+  (let [in-edit-mode? @(re-frame/subscribe [:in-edit-mode])]
+  [:tr 
+   [:th] 
+   [:th "#"] 
+   [:th 
+      {:style {:display (if (= in-edit-mode? false) "none")}}
+      "Actions"] 
+   [:th "Variable"] 
+   [:th "Title"]
+   [:th "Type"]
+   [:th "Description"]]))
+
 
 (defn table
   [schema-type]
@@ -64,10 +80,7 @@
           :class           "mdc-text-green"
           :tooltip         "Add Property"
           :on-click        #(dispatch [:add-row schema-type (:block-id @root)])]
-        (-> @root
-              transform-recursive    ; transform children recursively and flatten to array
-              (add-id-and-schema-type schema-type); add row id 0,1,2...
-              rest                   ; hide row 0
-              to-data-rows           ; add React meta data, transform to <tr> elements
-              data-table)            ; wrap <tr> elements in <table>
+        [:table {:class "table"}
+          [:thead (build-head) ]
+          [:tbody (build-rows @root schema-type) ]]
         ])))
