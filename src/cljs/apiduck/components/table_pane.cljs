@@ -10,32 +10,25 @@
             [apiduck.components.duck-table :refer [table]]))
 
 (defn endpoint-name []
-  (let [endpoint-name (re-frame/subscribe [:current-endpoint :endpoint-name])]
-    (fn []
-      [editable-text
-       :value @endpoint-name
-       :on-save #(dispatch [:change-endpoint :endpoint-name %])])))
+  [editable-text
+   :enabled @(re-frame/subscribe [:in-edit-mode])
+   :value   @(re-frame/subscribe [:current-endpoint :endpoint-name])
+   :on-save #(dispatch [:change-endpoint :endpoint-name %])])
 
 (defn http-requests-type []
-  (let [request-type (re-frame/subscribe [:current-endpoint :http-request-type])]
-    (fn []
-      [popover-radios
-       :value @request-type
-       :choices http-request-choices
-       :on-change #(dispatch [:change-endpoint :http-request-type %])
-       ]
-      )))
+  [popover-radios
+   :value     @(re-frame/subscribe [:current-endpoint :http-request-type])
+   :enabled   @(re-frame/subscribe [:in-edit-mode])
+   :choices   http-request-choices
+   :on-change #(dispatch [:change-endpoint :http-request-type %])])
 
 (defn endpoint-description []
-  (let [description (re-frame/subscribe [:current-endpoint :endpoint-description])]
-    (fn []
-      [:div {:style {:white-space "pre-wrap"}}
-        [editable-text 
-         :value @description
-         :use-textarea true
-         :on-save #(dispatch [:change-endpoint :endpoint-description %])]
-      ])))
-
+  [:div {:style {:white-space "pre-wrap"}}
+    [editable-text 
+     :enabled      @(re-frame/subscribe [:in-edit-mode])
+     :value        @(re-frame/subscribe [:current-endpoint :endpoint-description])
+     :use-textarea true
+     :on-save      #(dispatch [:change-endpoint :endpoint-description %])]]) 
 
 (defn table-pane
   []

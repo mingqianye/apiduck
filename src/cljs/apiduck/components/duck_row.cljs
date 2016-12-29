@@ -22,6 +22,7 @@
                  collapsed     
                  expandable
                  schema-type] } row]
+  (fn []
     (let [mouse-over-row? @mouse-over
           in-edit-mode? @(subscribe [:in-edit-mode])]
       [:tr {:style {:display (if (not= visible true) "none")}}
@@ -59,20 +60,24 @@
        [:td {:style {:background-color color}} 
         [:span indent] 
         [editable-text 
+         :enabled in-edit-mode?
          :value variable 
          :on-save #(dispatch [:change-row-attr-value schema-type block-id :variable %])]] 
        [:td {:style {:background-color color}} 
         [editable-text 
+         :enabled in-edit-mode?
          :value title
          :on-save #(dispatch [:change-row-attr-value schema-type block-id :title %])]] 
        [:td {:style {:background-color color}} 
         [popover-radios
+         :enabled in-edit-mode?
          :value variable-type
          :choices variable-type-choices
          :on-change #(dispatch [:change-row-variable-type schema-type block-id %])
          ]] 
        [:td {:style {:background-color color}} 
         [editable-text 
+         :enabled in-edit-mode?
          :value description
          :on-save #(dispatch [:change-row-attr-value schema-type block-id :description %])]] 
-       ])))
+       ]))))
